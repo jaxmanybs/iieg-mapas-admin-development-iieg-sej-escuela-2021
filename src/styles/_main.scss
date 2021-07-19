@@ -1,0 +1,48 @@
+$color-violet: #61568d;
+$color-blue: #262840;
+$color-blue-light: #91b0d9;
+$color-background: #e5ebf7;
+$color-orange: #f2ae72;
+$color-rose: #f08077;
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    font-family: "Fontil Sans";
+    // background: #f0f0f0;
+    background: $color-background;
+}
+
+.main-container {
+    position: absolute;
+    top: 64px;
+    left: 250px;
+    right: 0;
+    bottom: 0;
+    padding: 20px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+// html,
+// body {
+//     height: 100%;
+//     margin: 0;
+//     font-family: 'Fontil Sans';
+// }
+
+// .main-container {
+//     position: absolute;
+//     top: 64px;
+//     left: 250px;
+//     right: 0;
+//     bottom: 0;
+//     padding: 20px;
+// }
+
+// .mb-20 {
+//     margin-bottom: 20px;
+// }

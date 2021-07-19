@@ -1,0 +1,114 @@
+// $color-rose:        #CE5690;
+$color-yellow: #f6e4a9;
+$color-purple: #604289;
+$color-blue1: #b8e0ea;
+$color-blue2: #00a6d9;
+
+$color-violet: #61568d;
+$color-blue: #262840;
+$color-blue-light: #91b0d9;
+$color-background: #e5ebf7;
+$color-orange: #f2ae72;
+$color-rose: #f08077;
+
+:host {
+    display: block;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 1000;
+}
+.nav-brand {
+    width: 215px;
+    text-align: center;
+}
+.topnav-icon {
+    text-decoration: none;
+    display: flex;
+    color: $color-purple;
+}
+// .fix-nav {
+//     height: 6rem;
+// }
+.mat-icon {
+    // color: $color-gray3;
+    color: $color-purple;
+}
+.logo-first {
+    margin-top: 5px;
+    margin-left: 0.8rem;
+    // background: $color-rose;
+    // width: 10em;
+    height: 2.4em;
+    background: black;
+}
+.logo-iieg {
+    height: 6rem;
+}
+.logo-sej {
+    // height: 5.5em; PARA SVG
+    height: 3em;
+    padding-top: 0.5em;
+}
+.logo-jaliscogob {
+    height: 2.6em;
+}
+
+.mat-toolbar.mat-primary {
+    // background-color: $color-rose;
+    background: white;
+    // background: $color-blue;
+    // background: white;
+}
+
+.nav-spacer {
+    flex: 1 1 auto;
+}
+
+.visible-md {
+    display: none;
+}
+.visible-sm {
+    display: none;
+}
+@media screen and (max-width: 1270px) {
+    .visible-md {
+        display: block;
+    }
+}
+@media screen and (max-width: 768px) {
+    .visible-sm {
+        display: block;
+    }
+    .nav-brand {
+        width: 100%;
+    }
+    .logo-first {
+        margin-left: 0rem;
+        height: 1.9em;
+    }
+    .logo-iieg {
+        height: 2.8rem;
+    }
+    .logo-jaliscogob {
+        height: 1.8em;
+    }
+}
+@media screen and (max-width: 768px) {
+    .hidden-sm {
+        display: none;
+    }
+}
+@media screen and (max-width: 360px) {
+    .logo-first {
+        margin-left: 0rem;
+        height: 1.9em;
+    }
+    .logo-iieg {
+        height: 2rem;
+    }
+    .logo-jaliscogob {
+        height: 1.2em;
+    }
+}

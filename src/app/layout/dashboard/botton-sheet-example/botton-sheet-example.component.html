@@ -1,0 +1,101 @@
+<p>Seleccionar filtros</p>
+<mat-nav-list>
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+
+        <div>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Fecha inicio</mat-label>
+                <input formControlName="startDate" format='dd-MM-yyyy' matInput [matDatepicker]="myDatePicker1" [min]="minDateFilter" [max]="maxDateFilter" (dateInput)="addEvent('input', $event)" disable>
+                <mat-datepicker-toggle [for]="myDatePicker1" matSuffix></mat-datepicker-toggle>
+                <mat-datepicker #myDatePicker1 disabled="false"></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Fecha final</mat-label>
+                <input formControlName="endDate" format='dd-MM-yyyy' matInput [matDatepicker]="myDatePicker2" [min]="minDateFilter" [max]="maxDateFilter" (dateInput)="addEvent2('input', $event)" disable>
+                <mat-datepicker-toggle [for]="myDatePicker2" matSuffix></mat-datepicker-toggle>
+                <mat-datepicker #myDatePicker2 disabled="false"></mat-datepicker>
+            </mat-form-field>
+
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Hora inicio</mat-label>
+                <mat-select formControlName="startTimeZones">
+                    <mat-option *ngFor="let startTimeZone of startTimeZones" [value]="startTimeZone.value">
+                        {{startTimeZone.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Hora final</mat-label>
+                <mat-select formControlName="endTimeZones" [disabled]="disableSelect.value">
+                    <mat-option *ngFor="let endTimeZone of endTimeZones" [value]="endTimeZone.value">
+                        {{endTimeZone.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Municipio</mat-label>
+                <mat-select formControlName="towns">
+                    <mat-option *ngFor="let town of towns" [value]="town.value">
+                        {{town.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Tipo usuario</mat-label>
+                <mat-select formControlName="subcategories" [disabled]="disableSelect.value">
+                    <mat-option *ngFor="let subcategory of subcategories" [value]="subcategory.value">
+                        {{subcategory.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Consecuencia</mat-label>
+                <mat-select formControlName="wounds" [disabled]="disableSelect.value">
+                    <mat-option *ngFor="let wound of wounds" [value]="wound.value">
+                        {{wound.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Tipo vehículo</mat-label>
+                <mat-select formControlName="autoTypes">
+                    <mat-option *ngFor="let autoType of autoTypes" [value]="autoType.value">
+                        {{autoType.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <h3 class="num">2</h3>
+        <div>
+            <mat-form-field appearance="outline">
+            <mat-label>Adjuntar archivo</mat-label>
+                <mat-select formControlName="genders">
+                    <mat-option *ngFor="let gen of genders" [value]="gen.value">
+                        {{gen.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Día de la semana</mat-label>
+                <mat-select formControlName="weekDays"  [disabled]="disableSelect.value">
+                    <mat-option *ngFor="let weekDay of weekDays" [value]="weekDay.value">
+                        {{weekDay.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="stats">
+            <button mat-raised-button type="submit" class="btn btn-sm btn-warning" (click)="sendDataFilter($event)">Aplicar filtros</button>
+        </div>
+        <mat-divider class="navigation-divider"></mat-divider>
+    </form>
+</mat-nav-list>

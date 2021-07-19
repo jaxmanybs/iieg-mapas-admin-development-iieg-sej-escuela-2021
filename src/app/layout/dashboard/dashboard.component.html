@@ -1,0 +1,278 @@
+<div class="main-content">
+    <ngx-spinner bdColor="#000000" size="medium" color=" #00A6D9">
+        <img src="https://media.giphy.com/media/o8igknyuKs6aY/giphy.gif" />
+        <!-- [fullScreen]="false" -->
+        <!-- type="square-spin" -->
+        <!-- type="ball-scale-multiple" -->
+        <!-- type="ball-clip-rotate-multiple" -->
+        <!-- <p style="font-size: 20px; color: #ce5690">Carcango...</p> -->
+    </ngx-spinner>
+    <div class="content">
+        <!-- <div class="mb-1">
+            <h2 class="animated-link" (click)="drawer.toggle()" >Nota importante</h2>
+        </div> -->
+
+        <!-- <mat-drawer-container class="dashboard-container" autosize>
+            <mat-drawer #drawer class="dashboard-sidenav" mode="side">
+                <p class="black-text-padding">
+                    Instrucciones para filtrar o la nota que estaba en rojo.
+                </p>
+            </mat-drawer> -->
+
+        <!-- <div class="controls">
+            <div class="filter">
+                <div class="filter-content">
+                    <button
+                        class="btn_filter"
+                        mat-raised-button
+                        (click)="openBottomSheet()"
+                    >
+                        Filtrar
+                    </button>
+                    <div class="town-name">
+                        <div *ngIf="municipio != ''">
+                            Municipio:
+                            <span class="town-txt">{{ municipio }}</span>
+                        </div>
+                        <div *ngIf="municipio == ''">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-stats-content">
+                <div class="town-name">
+                    Municipio: <span class="town-txt">{{ municipio }}</span>
+                </div>
+                <div class="card-stats">
+                    <div class="stat">
+                        <div>
+                            <div>
+                                <img
+                                    class="sinister_logos"
+                                    src="./assets/images/sinister_intersections.svg"
+                                    alt=""
+                                />
+                            </div>
+                            <div>Intercecciones</div>
+                            <div class="result-sinister">
+                                {{ intersections }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <div>
+                            <div>
+                                <img
+                                    class="sinister_logos"
+                                    src="./assets/images/sinister_sinistries.svg"
+                                    alt=""
+                                />
+                            </div>
+                            <div>Siniestros</div>
+                            <div class="result-sinister">{{ sinistries }}</div>
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <div>
+                            <div>
+                                <img
+                                    class="sinister_logos"
+                                    src="./assets/images/sinister_involved.svg"
+                                    alt=""
+                                />
+                            </div>
+                            <div>Involucrados</div>
+                            <div class="result-sinister">{{ involved }}</div>
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <div>
+                            <div>
+                                <img
+                                    class="sinister_logos"
+                                    src="./assets/images/sinister_fatalities.svg"
+                                    alt=""
+                                />
+                            </div>
+                            <div>Fatalidades</div>
+                            <div class="result-sinister">{{ fatalities }}</div>
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <div>
+                            <div>
+                                <img
+                                    class="sinister_logos"
+                                    src="./assets/images/sinister_wounds.svg"
+                                    alt=""
+                                />
+                            </div>
+                            <div>Lesiones</div>
+                            <div class="result-sinister">{{ wounds }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="charts-pie-content">
+            <div class="charts-pie">
+                <div class="pie1">
+                    <div>Fatalidades</div>
+                    <h3>tipo de usuario</h3>
+                    <div class="chart-pie">
+                        <canvas
+                            baseChart
+                            [data]="pieChartData"
+                            [chartType]="pieChartType"
+                            [options]="pieChartOptions"
+                            [colors]="pieChartColors"
+                            [legend]="pieChartLegend"
+                        >
+                        </canvas>
+                    </div>
+                </div>
+                <div class="pie2">
+                    <div>Lesiones</div>
+                    <h3>tipo de usuario</h3>
+                    <div class="chart-pie">
+                        <div class="">
+                            <canvas
+                                baseChart
+                                [data]="pieChartData"
+                                [chartType]="pieChartType"
+                                [options]="pieChartOptions"
+                                [colors]="pieChartColors"
+                                [legend]="pieChartLegend"
+                            >
+                            </canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="pie-text">
+                    <div>Tipo de usuario</div>
+                    <div class="user_type">
+                        <mat-list>
+                            <mat-list-item
+                                *ngFor="let sinister of sinistriesLabel"
+                            >
+                                <div mat-line>
+                                    <img
+                                        class="sinister_users"
+                                        src="{{ sinister.sinisterIcon }}"
+                                        alt=""
+                                    />
+                                    <span class="sinister_users_txt">
+                                        {{ sinister.name }}
+                                    </span>
+                                </div> -->
+
+        <!--  -->
+        <!-- <img
+                                    class="sinister_users"
+                                    src="{{ sinister.sinisterIcon }}"
+                                    alt=""
+                                /> -->
+        <!-- <mat-icon mat-list-icon [style.color]="'#3F51B5'">accessibility</mat-icon> -->
+        <!-- <mat-icon
+                                    mat-list-icon
+                                    [style.color]="sinister.sinisterColor"
+                                    >{{ sinister.sinisterIcon }}</mat-icon
+                                > -->
+        <!--  -->
+
+        <!-- </mat-list-item>
+                        </mat-list>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <app-chartbar2020></app-chartbar2020>
+        <div class="charts-bar-content">
+            <div class="charts-bar">
+                <div class="bar">
+                    <div>
+                        Fatalidades y/o lesiones por rango de edad y género
+                    </div>
+                    <div class="chart-bar">
+                        <canvas
+                            baseChart
+                            [datasets]="barChartData"
+                            [labels]="barChartLabels"
+                            [options]="barChartOptions"
+                            [plugins]="barChartPlugins"
+                            [legend]="barChartLegend"
+                            [chartType]="barChartType"
+                        >
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="charts-line-content" *ngIf="minDateSelect == true">
+            <div class="charts-line">
+                <div class="line">
+                    <div>
+                        Comparativa de fatalidades y/o lesiones entre meses y
+                        años
+                    </div>
+                    <canvas
+                        baseChart
+                        width="400"
+                        height="100"
+                        [datasets]="lineChartData"
+                        [labels]="lineChartLabels"
+                        [options]="lineChartOptions"
+                        [colors]="lineChartColors"
+                        [legend]="lineChartLegend"
+                        [chartType]="lineChartType"
+                        [plugins]="lineChartPlugins"
+                        (chartHover)="chartHovered($event)"
+                        (chartClick)="chartClicked($event)"
+                    >
+                    </canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-content">
+            <div class="footer">
+                <div class="footer-txt-1">
+                    Mapa de sitio | Aviso de Privacidad | Contabilidad
+                    Gubernamental | Licitaciones
+                </div>
+                <div class="footer-txt-2">
+                    INSTITUCTO DE INFORMACIÓN ESTADÍSTICA Y GEOGRÁFICA DE JALICO
+                </div>
+                <div class="footer-txt-3">
+                    Calzada de los Pirules 71 Col. Cd. Granja C.P. 45010 Tel.
+                    (33) 37771770
+                </div>
+                <div class="footer-txt-4">Zapopan, Jalisco, México</div>
+                <div class="footer-txt-5">
+                    <img
+                        class="logo-jaliscogob"
+                        src="./assets/images/jaliscogob.svg"
+                        alt=""
+                    />
+                </div>
+            </div>
+        </div> -->
+
+        <!--  -->
+        <!-- </mat-drawer-container> -->
+        <!--
+
+         -->
+    </div>
+
+    <div class="map">
+        <app-map
+            [layer_case]="radioButton"
+            [dataFilter]="dataFilterDash"
+            (desde_el_hijo)="getDataMap($event)"
+            (desde_el_hijo_map)="getDataMap2($event)"
+        >
+        </app-map>
+    </div>
+</div>

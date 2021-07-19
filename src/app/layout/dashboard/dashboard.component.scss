@@ -1,0 +1,488 @@
+$color-rose: #cb3788;
+$color-gray2: #778da9;
+$color-gray3: #1b263b;
+$color-gray1: #e0e1dd;
+$color-blue: #1aa6be;
+
+$color-violet: #61568d;
+$color-blue: #262840;
+$color-blue-light: #91b0d9;
+$color-background: #e5ebf7;
+$color-orange: #f2ae72;
+$color-rose: #f08077;
+
+$color-degraded1: #f2ae72;
+$color-degraded2: #c48e82;
+$color-degraded3: #94718a;
+$color-degraded4: #61568d;
+
+// SEJ
+$color-sej-blue-light: #09a8e1;
+$color-sej-red: #e32351;
+$color-sej-yellow: #fdc406;
+$color-sej-gray: #78858d;
+$color-sej-gray15: #ececee;
+$color-sej-blue: #034c96;
+
+* {
+    background: white;
+    //   font-family: "archia";
+}
+// .controls {
+//     width: 100%;
+//     margin: 0;
+//     height: 20%;
+//     display: flex;
+//     flex-wrap: wrap;
+// }
+// .flex-item {
+//     width: 100%;
+// }
+
+// .example-card {
+//     max-width: 200px;
+//     margin: 1em;
+// }
+
+// ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+//     margin: .25em 0;
+// }
+// ::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
+//     padding: 0 .75em 0 .25em;
+//     margin-top: -0.25em;
+//     position: relative;
+// }
+// ::ng-deep  .mat-form-field {
+//     display: grid;
+//     position: relative;
+//     text-align: left;
+// }
+// ::ng-deep  .mat-form-field-flex {
+//     display: inline-flex;
+//     align-items: baseline;
+//     box-sizing: border-box;
+//     width: 70%;
+// }
+// ::ng-deep .mat-form-field-wrapper {
+//     padding-bottom: .44375em;
+//     margin-left: 40px 0px;
+// }
+/////////////////////////
+.main-content {
+    width: 100%;
+    margin: 0;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    .content {
+        width: 45%;
+        border: none;
+        font-weight: bold;
+        .controls {
+            width: 45%;
+            height: 200px;
+            // background: transparent;
+            // background: $color-blue;
+            position: fixed;
+            padding: 20px 0 0 20px;
+            // left: 1em;
+            z-index: 999;
+            -ms-overflow-y: auto;
+            overflow-y: auto;
+            margin: 0;
+            .filter-content {
+                display: flex;
+                flex-wrap: wrap;
+                padding-left: 1em;
+                .btn_filter {
+                    color: white;
+                    background-color: $color-blue;
+                }
+                .town-name {
+                    font-weight: bold;
+                    padding: 0 0 0 1em;
+                    font-size: 1.5em;
+                    .town-txt {
+                        font-weight: normal;
+                    }
+                }
+            }
+            .card-stats-content {
+                padding-top: 0.8em;
+                // font-family: "Nutmeg";
+                // .town-name {
+                //     font-weight: bold;
+                //     padding: 1em 0 2em 5em;
+                //     font-size: 1.5em;
+                //     .town-txt {
+                //         font-weight: normal;
+                //     }
+                // }
+                .card-stats {
+                    width: 100%;
+                    padding: 0 1em 0 1em;
+                    display: flex;
+                    text-align: center;
+                    .stat {
+                        width: 20%;
+                        .sinister_logos {
+                            width: 4em;
+                            padding-bottom: 0.3em;
+                        }
+                        .result-sinister {
+                            font-size: 24px;
+                        }
+                    }
+                }
+            }
+        }
+        .charts-pie-content {
+            width: 70%;
+            padding-top: 220px;
+            padding-bottom: 3em;
+            display: flex;
+            text-align: center;
+            .charts-pie {
+                width: 100%;
+                display: flex;
+                text-align: center;
+                .pie1 {
+                    width: 45%;
+                    text-align: center;
+                }
+                .pie2 {
+                    width: 45%;
+                    text-align: center;
+                }
+                .pie-text {
+                    // width: 100%;
+                    text-align: center;
+                    .user_type {
+                        text-align: left;
+                        padding-left: 0;
+                        ::ng-deep .mat-list-item-content {
+                            padding-left: 0;
+                        }
+                        .sinister_users {
+                            width: 2.5em;
+                            height: 1.7em;
+                        }
+                        .sinister_users_txt {
+                            font-size: 14px;
+                            padding-left: 1em;
+                        }
+                    }
+                }
+            }
+        }
+        .charts-bar-content {
+            padding-top: 1em;
+            padding-bottom: 3em;
+            display: flex;
+            justify-content: center;
+            .charts-bar {
+                width: 100%;
+                padding: 0 3em 0 3em;
+                .bar {
+                    width: 100%;
+                    text-align: center;
+                }
+            }
+        }
+        .charts-line-content {
+            // padding-top: 4em;
+            padding-bottom: 3em;
+            display: flex;
+            justify-content: center;
+            .charts-line {
+                width: 100%;
+                padding: 0 3em 0 3em;
+                .line {
+                    width: 100%;
+                    text-align: center;
+                }
+            }
+        }
+        .footer-content {
+            text-align: center;
+            background: #525659;
+
+            .footer {
+                width: 95%;
+                background: #525659;
+                color: white;
+                font-weight: normal;
+                .footer-txt-1 {
+                    padding-top: 3em;
+                    font-size: 1em;
+                    background: #525659;
+                }
+                .footer-txt-2 {
+                    padding-top: 1em;
+                    font-size: 0.8em;
+                    background: #525659;
+                }
+                .footer-txt-3 {
+                    padding-top: 1em;
+                    font-size: 0.75em;
+                    background: #525659;
+                }
+                .footer-txt-4 {
+                    padding-top: 1em;
+                    font-size: 0.7em;
+                    background: #525659;
+                }
+                .footer-txt-5 {
+                    // padding-top: 2em;
+                    background: #525659;
+
+                    .logo-jaliscogob {
+                        background: #525659;
+                        height: 10em;
+                    }
+                }
+            }
+        }
+    }
+
+    .map {
+        width: 45%;
+        border: none;
+        position: fixed;
+        right: 0;
+        top: 56px;
+        bottom: 0;
+        z-index: 999;
+        -ms-overflow-y: auto;
+        overflow-y: auto;
+    }
+}
+
+// .charts-bar {
+//     display: flex;
+//     flex-wrap: wrap;
+// }
+// .padre2 {
+//     width: 100%;
+//     // margin: 10;
+//     display: flex;
+//     text-align: center;
+//     background: #1b263b;
+// }
+// .padre3 {
+//     width: 100%;
+//     margin: 20;
+// }
+
+// .hijo02{
+//     width: 30%;
+// //     text-align: center;
+// }
+// .hijo022{
+//   width: 100%;
+//   text-align: center;
+// }
+// .hijo023{
+//   width: 100%;
+//   text-align: center;
+// }
+// graficas de pie
+
+.mat-list .mat-list-item {
+    height: 25px; /* default is 72px */
+    align-items: left;
+    font-size: 12px;
+}
+
+// .app-map {
+//     position: fixed;
+//     top: 40px;
+//     left: 50px;
+// }
+
+mat-list-item-content {
+    color: red !important;
+}
+.black-text {
+    text-align: justify;
+    color: black;
+}
+
+.black-text-padding {
+    text-align: justify;
+    color: red;
+    padding: 10px;
+    // background-color: #f74e4e85;
+}
+
+.dashboard-sidenav-content {
+    height: 100%;
+}
+
+.dashboard-sidenav {
+    width: 25%;
+    height: auto;
+    // background-color: #d3e0e6;
+    // background-color: #fd2a2aea;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #fad496;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #95682b;
+}
+
+.mat-drawer-container {
+    // background-color: white;
+
+    // background-color: #25ee0b;
+}
+
+.info-map {
+    width: 38px;
+    height: 38px;
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAACE1BMVEX///8A//8AgICA//8AVVVAQID///8rVVVJtttgv98nTmJ2xNgkW1ttyNsmWWZmzNZYxM4gWGgeU2JmzNNr0N1Rwc0eU2VXxdEhV2JqytQeVmMhVmNoydUfVGUgVGQfVGQfVmVqy9hqy9dWw9AfVWRpydVry9YhVmMgVGNUw9BrytchVWRexdGw294gVWQgVmUhVWPd4N6HoaZsy9cfVmQgVGRrytZsy9cgVWQgVWMgVWRsy9YfVWNsy9YgVWVty9YgVWVry9UgVWRsy9Zsy9UfVWRsy9YgVWVty9YgVWRty9Vsy9aM09sgVWRTws/AzM0gVWRtzNYgVWRuy9Zsy9cgVWRGcHxty9bb5ORbxdEgVWRty9bn6OZTws9mydRfxtLX3Nva5eRix9NFcXxOd4JPeINQeIMiVmVUws9Vws9Vw9BXw9BYxNBaxNBbxNBcxdJexdElWWgmWmhjyNRlx9IqXGtoipNpytVqytVryNNrytZsjZUuX210k5t1y9R2zNR3y9V4lp57zth9zdaAnKOGoaeK0NiNpquV09mesrag1tuitbmj1tuj19uktrqr2d2svcCu2d2xwMO63N+7x8nA3uDC3uDFz9DK4eHL4eLN4eIyYnDX5OM5Z3Tb397e4uDf4uHf5uXi5ePi5+Xj5+Xk5+Xm5+Xm6OY6aHXQ19fT4+NfhI1Ww89gx9Nhx9Nsy9ZWw9Dpj2abAAAAWnRSTlMAAQICAwQEBgcIDQ0ODhQZGiAiIyYpKywvNTs+QklPUlNUWWJjaGt0dnd+hIWFh4mNjZCSm6CpsbW2t7nDzNDT1dje5efr7PHy9PT29/j4+Pn5+vr8/f39/f6DPtKwAAABTklEQVR4Xr3QVWPbMBSAUTVFZmZmhhSXMjNvkhwqMzMzMzPDeD+xASvObKePPa+ffHVl8PlsnE0+qPpBuQjVJjno6pZpSKXYl7/bZyFaQxhf98hHDKEppwdWIW1frFnrxSOWHFfWesSEWC6R/P4zOFrix3TzDFLlXRTR8c0fEEJ1/itpo7SVO9Jdr1DVxZ0USyjZsEY5vZfiiAC0UoTGOrm9PZLuRl8X+Dq1HQtoFbJZbv61i+Poblh/97TC7n0neCcK0ETNUrz1/xPHf+DNAW9Ac6t8O8WH3Vp98f5lCaYKAOFZMLyHL4Y0fe319idMNgMMp+zWVSybUed/+/h7I4wRAG1W6XDy4XmjR9HnzvDRZXUAYDFOhC1S/Hh+fIXxen+eO+AKqbs+wAo30zDTDvDxKoJN88sjUzDFAvBzEUGFsnADoIvAJzoh2BZ8sner+Ke/vwECuQAAAABJRU5ErkJggg==")
+        /*logo.png*/;
+    background-repeat: no-repeat;
+    background-position: 2px;
+    background-color: white;
+    border: none;
+}
+
+.info-filter {
+    cursor: help;
+    margin: 0px;
+    padding: 0px;
+    font-size: 20px;
+}
+
+.animated-link {
+    cursor: help;
+    display: inline-block;
+    position: relative;
+    color: $color-blue;
+    font-weight: bold;
+}
+
+.animated-link:after {
+    background: none repeat scroll 0 0 transparent;
+    bottom: 0;
+    content: "";
+    display: block;
+    height: 2px;
+    left: 80%;
+    position: absolute;
+    background: $color-rose;
+    transition: width 0.3s ease 0s, left 0.3s ease 0s;
+    width: 0;
+}
+
+.animated-link:hover:after {
+    // color: $color-gray2;
+    width: 100%;
+    left: 0;
+}
+
+.tooltip-info {
+    font-size: 11px;
+}
+
+.mat-tab-group.mat-primary .mat-ink-bar {
+    background-color: #fbbb27;
+}
+@media screen and (max-width: 1320px) {
+    .hijo1 {
+        width: 50%;
+    }
+
+    .hijo02 {
+        width: 50%;
+        border: none;
+    }
+
+    .hijo2 {
+        width: 50%;
+        border: none;
+    }
+}
+@media screen and (max-width: 992px) {
+    .hijo1 {
+        width: 100%;
+    }
+    .charts-pie {
+        width: 100%;
+    }
+    .hijo2 {
+        width: 100%;
+        border: none;
+        height: 50vh;
+    }
+}
+
+@media screen and (max-width: 950px) {
+    .hijo1 {
+        width: 100%;
+    }
+    .charts-pie {
+        width: 100%;
+    }
+    .hijo2 {
+        width: 100%;
+        border: none;
+        height: 50vh;
+    }
+    .padre2 {
+        width: 100%;
+    }
+    .padre3 {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .hijo1 {
+        width: 100%;
+    }
+    .charts-pie {
+        width: 100%;
+    }
+
+    .hijo2 {
+        width: 100%;
+        border: none;
+        height: 60vh;
+    }
+    .padre2 {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+    .hijo21 {
+        width: 50%;
+        width: 50vh;
+    }
+    .hijo22 {
+        width: 100%;
+        width: 50vh;
+    }
+    .padre3 {
+        width: 100%;
+        align-items: center;
+    }
+    .charts-pie {
+        width: 100%;
+    }
+}

@@ -1,0 +1,217 @@
+// SEJ
+$color-sej-blue-light: #09a8e1;
+$color-sej-red: #e32351;
+$color-sej-yellow: #fdc406;
+$color-sej-gray: #78858d;
+$color-sej-gray15: #ececee;
+$color-sej-blue: #034c96;
+
+$sidebar-width: 250px;
+
+#sidebar {
+    width: $sidebar-width;
+    position: fixed;
+    top: 56px;
+    bottom: 0;
+    background: $color-sej-blue;
+    z-index: 999;
+    -ms-overflow-y: auto;
+    overflow-y: auto;
+    .mat-selection-list {
+        width: 99%;
+        mat-list-option {
+            color: $color-sej-gray15;
+            border: 1.5px solid $color-sej-gray15;
+            background-color: $color-sej-blue;
+            span {
+                display: flex;
+                justify-content: left;
+                mat-icon {
+                    margin-right: 10px;
+                }
+            }
+        }
+        mat-list-option[aria-selected="true"] {
+            background: $color-sej-gray15;
+            color: $color-sej-blue;
+            // color: white;
+        }
+    }
+    // .mat-nav-list {
+    //     width: 100%;
+    //     .btn_covid19 {
+    //         background: $color-blue1;
+    //         border: 3px solid $color-blue1;
+    //         color: $color-blue2;
+    //     }
+    //     a {
+    //         .mat-icon {
+    //             margin-right: 15px;
+    //         }
+    //         color: $color-blue2;
+    //     }
+    //     .iconovid19 {
+    //         margin-right: 0.5em;
+    //         height: 2em;
+    //     }
+    //     img {
+    //         background: $color-blue1;
+    //     }
+    // }
+}
+
+mat-icon {
+    padding-right: 0.2em;
+}
+.logosinister {
+    margin-top: 10px;
+    margin: 2rem;
+    align-items: center;
+    // background: $color-rose;
+    // width: 10em;
+    height: 8em;
+}
+.mat-dialog-container {
+    background-color: #f0f0f0;
+    // color: $color-blue2;
+}
+
+.mat-dialog-title {
+    color: $color-sej-blue;
+    font-size: 2rem;
+}
+.dialog-content {
+    padding-bottom: 20px;
+}
+a {
+    font-size: 13px;
+}
+.version {
+    padding-top: 2em;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $color-sej-gray15;
+    flex-direction: column;
+    .nota {
+        color: $color-sej-red;
+        border: 1.5px solid $color-sej-gray15;
+        background-color: $color-sej-gray15;
+    }
+}
+// .tooltip {
+//     background: $color-blue2;
+//     font-size: 16px;
+// }
+// .tooltip2 {
+//     background: $color-blue2;
+//     font-size: 16px;
+// }
+// .tooltip3 {
+//     background: $color-rose;
+//     font-size: 16px;
+// }
+// .tooltip4 {
+//     background: $color-blue2;
+//     font-size: 16px;
+// }
+.flex-item {
+    width: 50%;
+}
+.nested-menu {
+    .nested {
+        list-style-type: none;
+    }
+    .submenu {
+        display: none;
+        height: 0;
+    }
+    & .expand {
+        &.submenu {
+            display: block;
+            list-style-type: none;
+            height: auto;
+            margin: 0;
+            li {
+                a {
+                    padding: 10px;
+                    display: block;
+                }
+            }
+        }
+    }
+}
+
+.mat-form-field-flex {
+    width: 200px;
+}
+.mat-form-field-appearance-fill {
+    margin-left: 10px;
+    margin-right: 30px;
+}
+
+.example-radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+}
+
+.example-radio-button {
+    margin: 5px;
+}
+
+@media screen and (max-width: 1270px) {
+    #sidebar {
+        left: -$sidebar-width;
+    }
+}
+
+// #sidebar {
+//     width: 250px;
+//     position: fixed;
+//     top: 56px;
+//     bottom: 0;
+//     background: #fff;
+//     box-shadow: 3px 0 6px rgba(0, 0, 0, 0.24);
+//     z-index: 999;
+//     -ms-overflow-y: auto;
+//     overflow-y: auto;
+//     .mat-nav-list {
+//         width: 100%;
+//         a {
+//             .mat-icon {
+//                 margin-right: 15px;
+//             }
+//             display: block;
+//         }
+//     }
+// }
+// .nested-menu {
+//     .nested {
+//         list-style-type: none;
+//     }
+//     .submenu {
+//         display: none;
+//         height: 0;
+//     }
+//     & .expand {
+//         &.submenu {
+//             display: block;
+//             list-style-type: none;
+//             height: auto;
+//             margin: 0;
+//             li {
+//                 a {
+//                     padding: 10px;
+//                     display: block;
+//                 }
+//             }
+//         }
+//     }
+// }
+// @media screen and (max-width: 992px) {
+//     #sidebar {
+//         left: -250px;
+//     }
+// }

@@ -1,0 +1,207 @@
+<div id="sidebar">
+    <mat-selection-list #menu [multiple]="false" [(ngModel)]="selectedOptions">
+        <mat-list-option
+            [routerLinkActive]="'active'"
+            [routerLink]="['/med-sup']"
+            [value]="'med-sup'"
+            (click)="toggleSidebar()"
+        >
+            <span
+                ><mat-icon class="sidenav-icon">school</mat-icon>Media
+                Superior</span
+            >
+        </mat-list-option>
+        <mat-divider class="navigation-divider"></mat-divider>
+        <mat-list-option [routerLink]="['/cap-trab']" (click)="toggleSidebar()">
+            <span
+                ><mat-icon class="sidenav-icon">approval</mat-icon
+                >Capacitación</span
+            >
+        </mat-list-option>
+        <mat-divider class="navigation-divider"></mat-divider>
+    </mat-selection-list>
+    <div class="version">
+        <p>Versión 1.0</p>
+        <button class="nota" mat-raised-button (click)="openDialog()">
+            Nota Metodológica
+        </button>
+    </div>
+
+    <!-- elimiar -->
+    <!-- <mat-nav-list> -->
+
+    <!-- <div class="flex-item">
+            <img
+                class="logosinister"
+                src="./assets/images/logo-logo.png"
+                alt=""
+            />
+        </div> -->
+
+    <!-- <button
+            mat-list-item
+            [routerLinkActive]="'active'"
+            [routerLink]="['/']"
+            #tooltip="matTooltip"
+            matTooltip="Siniestros"
+            matTooltipClass="tooltip2"
+            [matTooltipPosition]="'below'"
+            matTooltipHideDelay="100"
+            aria-label="Button that displays a tooltip that hides when scrolled out of the container"
+            class="btn_covid19"
+        >
+            <div>
+                <img
+                    class="iconovid19"
+                    src="./assets/images/covid19_acumulados.svg"
+                    alt=""
+                />
+            </div>
+            {{ "Siniestros ZMG" | translate }}
+        </button>
+        <mat-divider class="navigation-divider"></mat-divider> -->
+
+    <!-- --------- -->
+
+    <!-- <label id="example-radio-group-label">Elige una opción: {{casos}}</label>
+        <mat-radio-group
+        aria-labelledby="example-radio-group-label"
+        class="example-radio-group"
+        [(ngModel)]="favoriteSeason">
+        <mat-radio-button class="example-radio-button"
+            *ngFor="let season of seasons"
+            [value]="season"
+            (change)="radioChange($event)">
+            {{season}}
+        </mat-radio-button>
+        </mat-radio-group> -->
+    <!-- <div>Your favorite season is: {{favoriteSeason}}</div>
+        <div>Your favorite season is: {{radioButton}}</div> -->
+
+    <!-- <mat-divider class="navigation-divider"></mat-divider> -->
+    <!-- <mat-divider class="navigation-divider"></mat-divider>
+        <mat-divider class="navigation-divider"></mat-divider> -->
+    <!-- <button mat-list-item  [routerLinkActive]="'active'" [routerLink]="['/activos/', eventDatePicker+'-act']" #tooltip="matTooltip" -->
+
+    <!-- <mat-divider class="navigation-divider"></mat-divider>
+        <mat-divider class="navigation-divider"></mat-divider> -->
+    <!-- <button mat-list-item [routerLinkActive]="'active'" [routerLink]="['/activos/', eventDatePicker+'-acu']" #tooltip="matTooltip"
+            matTooltip="Acumulados por municipio del estado de Jalisco"
+            matTooltipClass="tooltip2"
+            [matTooltipPosition]="'below'"
+            matTooltipHideDelay="0"
+            aria-label="Button that displays a tooltip that hides when scrolled out of the container"
+            class="btn_covid19">
+            <div><img class="iconovid19" src="./assets/images/covid19_acumulados.svg" alt=""></div>{{ 'Acumulados' | translate }}
+        </button> -->
+    <!-- <mat-divider class="navigation-divider"></mat-divider>
+        <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/radar/', eventDatePicker]">
+            <mat-icon class="sidenav-icon">public</mat-icon> {{ 'Radar Jalisco' | translate }}
+        </a> -->
+    <!-- <mat-divider class="navigation-divider"></mat-divider>
+
+        <button mat-list-item [routerLinkActive]="'active'" [routerLink]="['/activos/', eventDatePicker+'-def']" #tooltip="matTooltip"
+            matTooltip="Defunciones por municipio del estado de Jalisco"
+            matTooltipClass="tooltip3"
+            [matTooltipPosition]="'below'"
+            matTooltipHideDelay="0"
+            aria-label="Button that displays a tooltip that hides when scrolled out of the container"
+            class="btn_covid19">
+            <div ><img class="iconovid19" style="margin-left: 0.3rem;" src="./assets/images/covid19_defunciones.svg" alt=""></div> &nbsp; {{ 'Defunciones' | translate }}
+        </button>
+        <mat-divider class="navigation-divider"></mat-divider>
+        <button mat-list-item [routerLinkActive]="'active'" [routerLink]="['/activos/', eventDatePicker+'-nac']" #tooltip="matTooltip"
+            matTooltip="Casos acumulados, activos y defunciones por municipio nacional"
+            matTooltipClass="tooltip4"
+            [matTooltipPosition]="'below'"
+            matTooltipHideDelay="0"
+            aria-label="Button that displays a tooltip that hides when scrolled out of the container"
+            class="btn_covid19">
+            <div><img class="iconovid19" src="./assets/images/covid19_activos_nac.svg" alt=""></div> {{ 'Nacional' | translate }}
+        </button>
+        <mat-divider class="navigation-divider"></mat-divider> -->
+    <!-- <div class="version">
+            <p>Versión 1.0</p>
+        </div> -->
+    <!-- <mat-form-field>
+            <mat-label>Tooltip position</mat-label>
+          iv[formControl]="position">
+            <mat-option *ngFor="let positionOption of positionOptions" [value]="positionOption">
+                {{positionOption}}
+            </mat-option>
+            </mat-select>
+        </mat-form-field> -->
+
+    <!-- <div class="example-container" cdkScrollable>
+            <button mat-raised-button #tooltip="matTooltip"
+                    matTooltip="Info about the action"
+                    [matTooltipPosition]="position.value"
+                    matTooltipHideDelay="200"
+                    aria-label="Button that displays a tooltip that hides when scrolled out of the container"
+                    class="example-button">
+            Action
+            </button>
+        </div> -->
+
+    <!-- <img class="img-legend" src="https://indices.jalisco.gob.mx/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=covid19:activosxmpiograf&legend_options=fontName:Times%20New%20Roman;fontAntiAliasing:true;fontColor:0x00A6D9;fontSize:14;bgColor:0xB8E0EA;dpi:120" alt=""> -->
+
+    <!--
+        <p>parametro</p>
+        {{parametro}}
+        <div class="goku-comp">
+            <h3>Goku Component</h3>
+            <form>
+              <div class="form-group">
+                <label>Mensaje para Vegeta:</label>
+                <input class="form-control" #msg type="text">
+              </div>
+              <button class="btn btn-primary" type="button" (click)="enviarMensaje(msg.value)">Enviar Mensaje</button>
+            </form>
+            <div class="pedir-mensaje">
+              <button class="btn btn-info" (click)="verMensaje()">Ver mensaje de Vegeta</button>
+              <h3 *ngIf="mensajeVegeta">{{mensajeVegeta}}</h3>
+            </div>
+          </div>
+
+        <button class="btn btn-primary" (click)="cambiarNombre()">Cambiar nombre</button> -->
+
+    <!-- {{mensaje}}
+        <div (click)="updateData('falso')">Click t oupdate Data FALSE</div>
+        <div (click)="updateData('verddero')">Click to update Data TRUE</div>
+        <div><p>data from Service HERE:</p><p style="color:red"> {{myData}}</p></div> -->
+
+    <!-- <div (click)="updateData(false)">Click t oupdate Data FALSE</div>
+                <div (click)="updateData(true)">Click to update Data TRUE</div>
+               <child></child> -->
+
+    <!-- <div class="flex-item">
+            <mat-form-field appearance="fill">
+                <mat-label>Seleccionar fecha</mat-label>
+                <input format='dd-MM-yyyy' matInput [matDatepicker]="myDatePicker" [min]="minDate" [max]="maxDate" [formControl]="date" (dateInput)="addEvent('input', $event)" disable>
+                <mat-datepicker-toggle [for]="myDatePicker" matSuffix></mat-datepicker-toggle>
+                <mat-datepicker #myDatePicker disabled="false"></mat-datepicker>
+            </mat-form-field>
+        </div> -->
+
+    <!-- <div class="example-events">
+            <div *ngFor="let e of events">{{e}}</div>
+          </div> -->
+
+    <!-- <input matInput [matDatepicker]="myDatePicker" [min]="minDate" [max]="maxDate" [formControl]="date" [value]="date.value"> -->
+
+    <!-- <div class="flex-item">
+            <mat-form-field>
+              <mat-label>Fecha</mat-label>
+              <mat-select [(value)]="dates[0]">
+                <mat-option [value]="option" *ngFor="let option of dates">{{ option }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+        </div> -->
+    <!-- <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/screen1']">
+            <mat-icon class="sidenav-icon">build</mat-icon> {{ 'COVID-19' | translate }}
+        </a>
+        <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/screen2']">
+            <mat-icon class="sidenav-icon">people</mat-icon> {{ 'Screen2' | translate }}
+        </a> -->
+    <!-- </mat-nav-list> -->
+</div>

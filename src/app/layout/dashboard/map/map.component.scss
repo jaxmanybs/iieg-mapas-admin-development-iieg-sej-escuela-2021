@@ -1,0 +1,76 @@
+$color-rose: #ce5690;
+$color-yellow: #f6e4a9;
+$color-purple: #604289;
+$color-blue1: #b8e0ea;
+$color-blue2: #00a6d9;
+
+$color-violet: #61568d;
+$color-blue: #262840;
+$color-blue-light: #91b0d9;
+$color-background: #e5ebf7;
+$color-orange: #f2ae72;
+$color-rose: #f08077;
+
+// SEJ
+$color-sej-blue-light: #09a8e1;
+$color-sej-red: #e32351;
+$color-sej-yellow: #fdc406;
+$color-sej-gray: #78858d;
+$color-sej-gray15: #ececee;
+$color-sej-blue: #034c96;
+
+.map {
+    width: 100%;
+    height: 100%;
+}
+#overlay {
+    position: absolute;
+    z-index: 1;
+}
+#layertreee {
+    position: absolute;
+    margin-left: 3.4rem;
+}
+.mat-expansion-panel-body {
+    margin-top: 20px;
+}
+.mat-expansion-panel {
+    background: $color-sej-gray15;
+    margin: 0;
+}
+.mat-expansion-panel-center {
+    margin: 0;
+}
+.mat-expansion-panel-header .mat-expansion-panel-body {
+    margin: 0;
+}
+.mat-card {
+    padding: 0rem;
+}
+.acordion-mat {
+    padding-top: 0.6rem;
+}
+.capas {
+    font-size: 1rem;
+    margin: 16px;
+}
+.covid-layer {
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    color: $color-purple;
+}
+@media screen and (max-width: 1240px) {
+    .capas {
+        margin: 10px;
+    }
+    .mat-expansion-panel {
+        width: 140px;
+    }
+    .mat-expansion-panel-body {
+        padding: 0 10px 16px;
+    }
+    .img {
+        width: 100px;
+    }
+}

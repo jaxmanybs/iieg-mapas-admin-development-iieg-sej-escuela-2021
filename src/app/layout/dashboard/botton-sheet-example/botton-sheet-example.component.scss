@@ -1,0 +1,21 @@
+// ::ng-deep .mat-bottom-sheet-container-large {
+//     min-width: 900px;
+//     max-width: calc(100vw - 256px);
+// }
+
+::ng-deep .mat-bottom-sheet-container {
+    padding: 20px 0px 200px 16px;
+    // min-width: 100vw;
+    box-sizing: border-box;
+    display: block;
+    outline: 0;
+    max-height: 80vh;
+    overflow: auto;
+}
+
+
+.num {
+    color: green;
+    font-size: 40px;
+
+}
