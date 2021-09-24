@@ -1,31 +1,41 @@
-$color-rose: #cb3788;
-$color-gray2: #778da9;
-$color-gray3: #1b263b;
-$color-gray1: #e0e1dd;
-$color-blue: #1aa6be;
+// $color-rose: #cb3788;
+// $color-gray2: #778da9;
+// $color-gray3: #1b263b;
+// $color-gray1: #e0e1dd;
+// $color-blue: #1aa6be;
 
-$color-violet: #61568d;
-$color-blue: #262840;
-$color-blue-light: #91b0d9;
-$color-background: #e5ebf7;
-$color-orange: #f2ae72;
-$color-rose: #f08077;
+// $color-violet: #61568d;
+// $color-blue: #262840;
+// $color-blue-light: #91b0d9;
+// $color-background: #e5ebf7;
+// $color-orange: #f2ae72;
+// $color-rose: #f08077;
 
-$color-degraded1: #f2ae72;
-$color-degraded2: #c48e82;
-$color-degraded3: #94718a;
-$color-degraded4: #61568d;
+// $color-degraded1: #f2ae72;
+// $color-degraded2: #c48e82;
+// $color-degraded3: #94718a;
+// $color-degraded4: #61568d;
 
 // SEJ
-$color-sej-blue-light: #09a8e1;
-$color-sej-red: #e32351;
-$color-sej-yellow: #fdc406;
-$color-sej-gray: #78858d;
-$color-sej-gray15: #ececee;
-$color-sej-blue: #034c96;
+$color-sej-purple: #960048;
+$color-sej-red: #e7004c;
+$color-sej-pink1: #f45197;
+$color-sej-pink2: #fa7598;
+$color-sej-violet1: #9578d3;
+$color-sej-violet2: #c29fd8;
+$color-sej-violet3: #ecd2e1;
+$color-sej-blue1: #004a98;
+$color-sej-blue2: #00a7e1;
+$color-sej-blue3: #6bc4e8;
+$color-sej-green: #3dae2b;
+$color-sej-yellow: #ffc600;
+$color-sej-orange1: #ff6c37;
+$color-sej-orange2: #ff9d6c;
+$color-sej-gray: #7b868c;
+$color-sej-white: white;
 
 * {
-    background: white;
+    background: $color-sej-white;
     //   font-family: "archia";
 }
 // .controls {
@@ -68,6 +78,23 @@ $color-sej-blue: #034c96;
 //     margin-left: 40px 0px;
 // }
 /////////////////////////
+
+mat-card {
+    box-shadow: none !important;
+    // background-color: $color-sej-violet3;
+}
+// mat-card-content {
+//     background-color: $color-sej-violet1;
+// }
+mat-card-subtitle {
+    display: flex;
+    justify-content: center;
+    .data1-1-icons {
+        display: flex;
+        // justify-content: center;
+        flex-direction: column;
+    }
+}
 .main-content {
     width: 100%;
     margin: 0;
@@ -75,14 +102,67 @@ $color-sej-blue: #034c96;
     display: flex;
     flex-wrap: wrap;
     .content {
-        width: 45%;
+        width: 40%;
         border: none;
         font-weight: bold;
+        // background: $color-sej-blue1;
+        display: flex;
+        flex-wrap: wrap;
+        text-align: center;
+
+        .data {
+            width: 100%;
+            display: flex;
+            .data1 {
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                // background: $color-sej-yellow;
+                .data11 {
+                    width: 100%;
+                    .data1-1 {
+                        color: $color-sej-white;
+                        font-size: 34px;
+                        font-weight: bold;
+                        height: 100%;
+                        padding: 5px;
+                        text-align: center;
+                        // width: 100%;
+                        // background: $color-sej-blue1;
+                        .icons {
+                            // width: 10em;
+                            // padding-top: 0;
+                        }
+                        .num-student {
+                            background: $color-sej-red;
+                            border-bottom-right-radius: 5px;
+                            border-top-left-radius: 5px;
+                            padding: 0 10px;
+                        }
+                        .num-schools {
+                            background: $color-sej-yellow;
+                            border-bottom-right-radius: 5px;
+                            border-top-left-radius: 5px;
+                            padding: 0 10px;
+                        }
+                        .num-graf {
+                            background: $color-sej-gray;
+                            border-bottom-right-radius: 13px;
+                            border-top-left-radius: 13px;
+                            margin: 0 5px;
+                            padding: 0 15px;
+                            color: $color-sej-white;
+                        }
+                    }
+                }
+            }
+        }
+
         .controls {
-            width: 45%;
-            height: 200px;
+            // width: 45%;
+            // height: 200px;
             // background: transparent;
-            // background: $color-blue;
+            background: $color-sej-purple;
             position: fixed;
             padding: 20px 0 0 20px;
             // left: 1em;
@@ -96,7 +176,7 @@ $color-sej-blue: #034c96;
                 padding-left: 1em;
                 .btn_filter {
                     color: white;
-                    background-color: $color-blue;
+                    background-color: $color-sej-purple;
                 }
                 .town-name {
                     font-weight: bold;
@@ -246,7 +326,7 @@ $color-sej-blue: #034c96;
     }
 
     .map {
-        width: 45%;
+        width: 50%;
         border: none;
         position: fixed;
         right: 0;
@@ -373,7 +453,7 @@ mat-list-item-content {
     cursor: help;
     display: inline-block;
     position: relative;
-    color: $color-blue;
+    color: $color-sej-pink1;
     font-weight: bold;
 }
 
@@ -385,7 +465,7 @@ mat-list-item-content {
     height: 2px;
     left: 80%;
     position: absolute;
-    background: $color-rose;
+    background: $color-sej-pink1;
     transition: width 0.3s ease 0s, left 0.3s ease 0s;
     width: 0;
 }

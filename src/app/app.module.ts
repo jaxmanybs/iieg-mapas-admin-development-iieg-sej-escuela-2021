@@ -12,7 +12,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,7 +21,6 @@ import { RequestService } from './layout/services/request.service';
 // import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { NgxSpinnerModule } from 'ngx-spinner';
-
 
 
 // AoT requires an exported function for factories
@@ -43,12 +42,12 @@ export const createTranslateLoader = (http: HttpClient) => {
         BrowserAnimationsModule,
         DashboardModule,
         LayoutModule,
-        FormsModule,
         OverlayModule,
         HttpClientModule,
         MatMomentDateModule,
         MatListModule,
         NgxSpinnerModule,
+        ReactiveFormsModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -57,7 +56,7 @@ export const createTranslateLoader = (http: HttpClient) => {
             }
         })
     ],
-    providers: [RequestService, {provide: LOCALE_ID, useValue: 'es-AR'}],
+    providers: [RequestService, { provide: LOCALE_ID, useValue: 'es-AR' }],
     bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

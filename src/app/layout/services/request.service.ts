@@ -1,23 +1,35 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import 'rxjs/add/operator/map' ;
+import 'rxjs/add/operator/map';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { formatDate } from '@angular/common';
 import { environment } from '../../../environments/environment';
 import { Subject } from 'rxjs';
 
+export class Data {
+    nombre: string;
+    email: string;
+}
 @Injectable({
     providedIn: 'root',
 })
 export class RequestService {
 
-        constructor(
+    constructor(
         private http: HttpClient
-        ) {
+    ) {
+
+        this.datas = [];
+        this.data$ = new Subject();
         //   this.datePipeString = formatDate(Date.now(),'yyyyMMdd', 'en-US');
         // console.log('this.datePipeString');
         // console.log(this.datePipeString);
     }
+
+    // private data: Data;
+    private datas: Data[];
+    private data$: Subject<Data[]>;
+
     private bulma = new BehaviorSubject<string>('');
 
     // No se utiliza directamente el BehaviorSubject (buena practica)
@@ -53,6 +65,24 @@ export class RequestService {
 
     date_now_def;
 
+    setDataService(data: Data) {
+
+        console.log('setDataService()');
+        console.log('this.datas');
+        console.log(this.datas);
+
+        this.datas.push(data);
+        this.data$.next(this.datas);
+    }
+
+    getData$(): Observable<Data[]> {
+        console.log('getData$()');
+        console.log(this.data$.asObservable());
+
+
+        return this.data$.asObservable();
+    }
+
     // Almacenar mensaje, listo para mostrarlo a quién lo pida.
     enviar(mensaje) {
         // function que llamará quien quiera transmitir un mensaje.
@@ -62,7 +92,7 @@ export class RequestService {
     getDate() {
 
         const date = new Date();
-        let viewparams   = formatDate(date, 'yyyyMMdd', 'en-US');
+        let viewparams = formatDate(date, 'yyyyMMdd', 'en-US');
 
         viewparams = ('&VIEWPARAMS=aaaammdd:' + viewparams);
 
@@ -71,16 +101,16 @@ export class RequestService {
         let urlDate;
 
         try {
-            urlDate = `${environment.geoserverApi + '/' + environment.workspaceCovid  + '/ows?'
-            + environment.wfsService + '&' + environment.version + '&' + environment.requestFeature + '&'
-            + 'typeName=' + environment.workspaceCovid + ':' + environment.activosxmpiograf_7_14 + '&' + environment.outputJson + viewparams + cvegeo}`;
+            urlDate = `${environment.geoserverApi + '/' + environment.workspaceCovid + '/ows?'
+                + environment.wfsService + '&' + environment.version + '&' + environment.requestFeature + '&'
+                + 'typeName=' + environment.workspaceCovid + ':' + environment.activosxmpiograf_7_14 + '&' + environment.outputJson + viewparams + cvegeo}`;
 
             return this.http.get<any>(urlDate);
         } catch {
 
-            urlDate = `${environment.geoserverApi + '/' + environment.workspaceCovid  + '/ows?'
-            + environment.wfsService + '&' + environment.version + '&' + environment.requestFeature + '&'
-            + 'typeName=' + environment.workspaceCovid + ':' + environment.activosxmpiograf_7_14 + '&' + environment.outputJson + cvegeo}`;
+            urlDate = `${environment.geoserverApi + '/' + environment.workspaceCovid + '/ows?'
+                + environment.wfsService + '&' + environment.version + '&' + environment.requestFeature + '&'
+                + 'typeName=' + environment.workspaceCovid + ':' + environment.activosxmpiograf_7_14 + '&' + environment.outputJson + cvegeo}`;
 
             return this.http.get<any>(urlDate);
         }
@@ -90,14 +120,14 @@ export class RequestService {
         const date2 = new Date();
         date2.setDate(date2.getDate() - 1);
 
-        let viewparams2   = formatDate(date2, 'yyyyMMdd', 'en-US');
+        let viewparams2 = formatDate(date2, 'yyyyMMdd', 'en-US');
         viewparams2 = ('&VIEWPARAMS=aaaammdd:' + viewparams2);
 
         const cvegeo = '&CQL_FILTER=cvegeo like \'14039\'';
 
-        const urlDate = `${environment.geoserverApi + '/' + environment.workspaceCovid  + '/ows?'
-        + environment.wfsService + '&' + environment.version + '&' + environment.requestFeature + '&'
-        + 'typeName=' + environment.workspaceCovid + ':' + environment.activosxmpiograf_7_14 + '&' + environment.outputJson + viewparams2 + cvegeo}`;
+        const urlDate = `${environment.geoserverApi + '/' + environment.workspaceCovid + '/ows?'
+            + environment.wfsService + '&' + environment.version + '&' + environment.requestFeature + '&'
+            + 'typeName=' + environment.workspaceCovid + ':' + environment.activosxmpiograf_7_14 + '&' + environment.outputJson + viewparams2 + cvegeo}`;
 
         return this.http.get<any>(urlDate);
     }
@@ -106,9 +136,9 @@ export class RequestService {
         viewparams = ('&VIEWPARAMS=aaaammdd:' + viewparams);
         const cqlfilter = (`&CQL_FILTER=cvegeo like '${cvegeo}'`);
 
-        const urlActives = `${environment.geoserverApi + '/' + environment.workspaceCovid  + '/ows?'
-        + environment.wfsService + '&' + environment.version + '&' + environment.requestFeature + '&'
-        + 'typeName=' + environment.workspaceCovid + ':' + environment.activosxmpiograf_7_14 + '&' + environment.outputJson + viewparams + cqlfilter}`;
+        const urlActives = `${environment.geoserverApi + '/' + environment.workspaceCovid + '/ows?'
+            + environment.wfsService + '&' + environment.version + '&' + environment.requestFeature + '&'
+            + 'typeName=' + environment.workspaceCovid + ':' + environment.activosxmpiograf_7_14 + '&' + environment.outputJson + viewparams + cqlfilter}`;
 
         return this.http.get<any>(urlActives);
     }
@@ -117,9 +147,9 @@ export class RequestService {
         viewparams7 = ('&VIEWPARAMS=aaaammdd:' + viewparams7);
         const cqlfilter = (`&CQL_FILTER=cvegeo like '${cvegeo}'`);
 
-        const urlActives7 = `${environment.geoserverApi + '/' + environment.workspaceCovid  + '/ows?'
-        + environment.wfsService + '&' + environment.version + '&' + environment.requestFeature + '&'
-        + 'typeName=' + environment.workspaceCovid + ':' + environment.activosxmpiograf_7_14 + '&' + environment.outputJson + viewparams7 + cqlfilter}`;
+        const urlActives7 = `${environment.geoserverApi + '/' + environment.workspaceCovid + '/ows?'
+            + environment.wfsService + '&' + environment.version + '&' + environment.requestFeature + '&'
+            + 'typeName=' + environment.workspaceCovid + ':' + environment.activosxmpiograf_7_14 + '&' + environment.outputJson + viewparams7 + cqlfilter}`;
 
         return this.http.get<any>(urlActives7);
     }
@@ -128,9 +158,9 @@ export class RequestService {
         viewparams14 = ('&VIEWPARAMS=aaaammdd:' + viewparams14);
         const cqlfilter = (`&CQL_FILTER=cvegeo like '${cvegeo}'`);
 
-        const urlActives14 = `${environment.geoserverApi + '/' + environment.workspaceCovid  + '/ows?'
-        + environment.wfsService + '&' + environment.version + '&' + environment.requestFeature + '&'
-        + 'typeName=' + environment.workspaceCovid + ':' + environment.activosxmpiograf_7_14 + '&' + environment.outputJson + viewparams14 + cqlfilter}`;
+        const urlActives14 = `${environment.geoserverApi + '/' + environment.workspaceCovid + '/ows?'
+            + environment.wfsService + '&' + environment.version + '&' + environment.requestFeature + '&'
+            + 'typeName=' + environment.workspaceCovid + ':' + environment.activosxmpiograf_7_14 + '&' + environment.outputJson + viewparams14 + cqlfilter}`;
 
         return this.http.get<any>(urlActives14);
     }
@@ -142,9 +172,9 @@ export class RequestService {
         const cqlfilter = (`&CQL_FILTER=cvegeo like '${cvegeo}'`);
         viewparams2 = ('&VIEWPARAMS=aaaammdd:' + viewparams2);
 
-        const getAcumMun = `${environment.geoserverApi + '/' + environment.workspaceCovid  + '/ows?'
-        + environment.wfsService + '&' + environment.version + '&' + environment.requestFeature + '&'
-        + 'typeName=' + environment.workspaceCovid + ':' + layers + '&' + environment.outputJson + viewparams2 + cqlfilter}`;
+        const getAcumMun = `${environment.geoserverApi + '/' + environment.workspaceCovid + '/ows?'
+            + environment.wfsService + '&' + environment.version + '&' + environment.requestFeature + '&'
+            + 'typeName=' + environment.workspaceCovid + ':' + layers + '&' + environment.outputJson + viewparams2 + cqlfilter}`;
 
         return this.http.get<any>(getAcumMun);
     }
@@ -155,9 +185,9 @@ export class RequestService {
         const cqlfilter = (`&CQL_FILTER=cvegeo like '${cvegeo}'`);
         viewparams2 = ('&VIEWPARAMS=' + viewparams2);
 
-        const getAcumMun = `${environment.geoserverApi + '/' + environment.workspaceCovid  + '/ows?'
-        + environment.wfsService + '&' + environment.version + '&' + environment.requestFeature + '&'
-        + 'typeName=' + environment.workspaceCovid + ':' + layers + '&' + environment.outputJson + viewparams2 + cqlfilter}`;
+        const getAcumMun = `${environment.geoserverApi + '/' + environment.workspaceCovid + '/ows?'
+            + environment.wfsService + '&' + environment.version + '&' + environment.requestFeature + '&'
+            + 'typeName=' + environment.workspaceCovid + ':' + layers + '&' + environment.outputJson + viewparams2 + cqlfilter}`;
 
         return this.http.get<any>(getAcumMun);
     }
@@ -167,9 +197,9 @@ export class RequestService {
         const cqlfilter = (`&CQL_FILTER=cvegeo like '${cvegeo}'`);
         viewparams2 = ('&VIEWPARAMS=aaaammdd:' + viewparams2);
 
-        const getAcumMun = `${environment.geoserverApi + '/' + environment.workspaceCovid  + '/ows?'
-        + environment.wfsService + '&' + environment.version + '&' + environment.requestFeature + '&'
-        + 'typeName=' + environment.workspaceCovid + ':' + layers + '&' + environment.outputJson + viewparams2 + cqlfilter}`;
+        const getAcumMun = `${environment.geoserverApi + '/' + environment.workspaceCovid + '/ows?'
+            + environment.wfsService + '&' + environment.version + '&' + environment.requestFeature + '&'
+            + 'typeName=' + environment.workspaceCovid + ':' + layers + '&' + environment.outputJson + viewparams2 + cqlfilter}`;
 
         return this.http.get<any>(getAcumMun);
     }
@@ -179,9 +209,9 @@ export class RequestService {
         const cqlfilter = (`&CQL_FILTER=cvegeo like '${cvegeo}'`);
         viewparams2 = ('&VIEWPARAMS=' + viewparams2);
 
-        const getActivesMun = `${environment.geoserverApi + '/' + environment.workspaceCovid  + '/ows?'
-        + environment.wfsService + '&' + environment.version + '&' + environment.requestFeature + '&'
-        + 'typeName=' + environment.workspaceCovid + ':' + layers + '&' + environment.outputJson + viewparams2 + cqlfilter}`;
+        const getActivesMun = `${environment.geoserverApi + '/' + environment.workspaceCovid + '/ows?'
+            + environment.wfsService + '&' + environment.version + '&' + environment.requestFeature + '&'
+            + 'typeName=' + environment.workspaceCovid + ':' + layers + '&' + environment.outputJson + viewparams2 + cqlfilter}`;
 
         // console.log(getActivesMun);
 
@@ -193,9 +223,9 @@ export class RequestService {
         const cqlfilter = (`&CQL_FILTER=cvegeo like '${cvegeo}'`);
         viewparams = ('&VIEWPARAMS=aaaammdd:' + viewparams);
 
-        const getActives7Mun = `${environment.geoserverApi + '/' + environment.workspaceCovid  + '/ows?'
-        + environment.wfsService + '&' + environment.version + '&' + environment.requestFeature + '&'
-        + 'typeName=' + environment.workspaceCovid + ':' + layers + '&' + environment.outputJson + viewparams + cqlfilter}`;
+        const getActives7Mun = `${environment.geoserverApi + '/' + environment.workspaceCovid + '/ows?'
+            + environment.wfsService + '&' + environment.version + '&' + environment.requestFeature + '&'
+            + 'typeName=' + environment.workspaceCovid + ':' + layers + '&' + environment.outputJson + viewparams + cqlfilter}`;
 
         // console.log(getActives7Mun);
 
@@ -207,9 +237,9 @@ export class RequestService {
         const cqlfilter = (`&CQL_FILTER=cvegeo like '${cvegeo}'`);
         viewparams = ('&VIEWPARAMS=aaaammdd:' + viewparams);
 
-        const getActives14Mun = `${environment.geoserverApi + '/' + environment.workspaceCovid  + '/ows?'
-        + environment.wfsService + '&' + environment.version + '&' + environment.requestFeature + '&'
-        + 'typeName=' + environment.workspaceCovid + ':' + layers + '&' + environment.outputJson + viewparams + cqlfilter}`;
+        const getActives14Mun = `${environment.geoserverApi + '/' + environment.workspaceCovid + '/ows?'
+            + environment.wfsService + '&' + environment.version + '&' + environment.requestFeature + '&'
+            + 'typeName=' + environment.workspaceCovid + ':' + layers + '&' + environment.outputJson + viewparams + cqlfilter}`;
 
         // console.log(getActives14Mun);
 
@@ -241,7 +271,7 @@ export class RequestService {
             case 'act' || 'act3': {
                 layer = 'activosacumedades';
                 break;
-              }
+            }
             case 'acu': {
                 layer = 'postivosacumedades';
                 break;
@@ -263,9 +293,9 @@ export class RequestService {
 
         viewparams = ('&VIEWPARAMS=aaaammdd:' + viewparams);
 
-        const urlAcumEdades1 = `${environment.geoserverApi + '/' + environment.workspaceCovid  + '/ows?'
-        + environment.wfsService + '&' + environment.version + '&' + environment.requestFeature + '&'
-        + 'typeName=' + environment.workspaceCovid + ':' + layer + '&' + environment.outputJson + viewparams + cqlfilter}`;
+        const urlAcumEdades1 = `${environment.geoserverApi + '/' + environment.workspaceCovid + '/ows?'
+            + environment.wfsService + '&' + environment.version + '&' + environment.requestFeature + '&'
+            + 'typeName=' + environment.workspaceCovid + ':' + layer + '&' + environment.outputJson + viewparams + cqlfilter}`;
 
         return this.http.get<any>(urlAcumEdades1);
     }
@@ -274,9 +304,9 @@ export class RequestService {
         viewparams = ('&VIEWPARAMS=aaaammdd:' + viewparams);
         const cqlfilter = (`&CQL_FILTER=cvegeo like '${this.cvegeo}'`);
 
-        const urlAcumEdades = `${environment.geoserverApi + '/' + environment.workspaceCovid  + '/ows?'
-        + environment.wfsService + '&' + environment.version + '&' + environment.requestFeature + '&'
-        + 'typeName=' + environment.workspaceCovid + ':' + environment.activosacumedades + '&' + environment.outputJson + viewparams + cqlfilter}`;
+        const urlAcumEdades = `${environment.geoserverApi + '/' + environment.workspaceCovid + '/ows?'
+            + environment.wfsService + '&' + environment.version + '&' + environment.requestFeature + '&'
+            + 'typeName=' + environment.workspaceCovid + ':' + environment.activosacumedades + '&' + environment.outputJson + viewparams + cqlfilter}`;
 
         return this.http.get<any>(urlAcumEdades);
 

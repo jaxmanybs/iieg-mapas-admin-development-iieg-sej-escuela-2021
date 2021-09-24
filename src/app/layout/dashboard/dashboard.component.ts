@@ -30,8 +30,6 @@ import { SpinnerService } from '../services/spinner.service';
 import { CalendarView, DAYS_OF_WEEK, CalendarEvent } from 'angular-calendar';
 import * as moment from 'moment';
 
-
-
 interface Worker {
     value: string;
     name: string;
@@ -53,11 +51,8 @@ const colors: any = {
 };
 
 const sinisterColors: any = {
-    peaton: '#91B0D9',
-    pasajero: '#262840',
-    motociclista: '#61568D',
-    conductor: '#F08077',
-    ciclista: '#F2AE72',
+    med_sup: '#e7004c',
+    cap_trab: '#ffc600',
 };
 export interface Section {
     name: string;
@@ -70,6 +65,10 @@ export interface Section {
     styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+
+    // observable and subject
+    data: string;
+    formulario: FormGroup;
 
     //////////////////////// Sinisetralidad /////////////////////////////////
     public barChartOptions: ChartOptions = {
@@ -495,31 +494,16 @@ export class DashboardComponent implements OnInit {
     sinistriesLabel: Section[] = [
         {
             name: 'Peatón',
-            sinisterColor: sinisterColors.peaton,
+            sinisterColor: sinisterColors.med_sup,
             sinisterIcon: './assets/images/user_peaton.svg',
         },
         {
             name: 'Pasajero de otro vehículo',
-            sinisterColor: sinisterColors.pasajero,
+            sinisterColor: sinisterColors.cap_trab,
             sinisterIcon: './assets/images/user_pasajero.svg',
-        },
-        {
-            name: 'Motociclista',
-            sinisterColor: sinisterColors.motociclista,
-            sinisterIcon: './assets/images/user_motociclista.svg',
-        },
-        {
-            name: 'Conductor de otro vehículo',
-            sinisterColor: sinisterColors.conductor,
-            sinisterIcon: './assets/images/user_conductor.svg',
-        },
-        {
-            name: 'Ciclista',
-            sinisterColor: sinisterColors.ciclista,
-            sinisterIcon: './assets/images/user_ciclista.svg',
         }
     ];
-    public pieChartOptions: ChartOptions = {
+    public doughnutChartOptions: ChartOptions = {
         responsive: true,
         legend: {
             position: 'top',
@@ -533,19 +517,16 @@ export class DashboardComponent implements OnInit {
             },
         }
     };
-    public pieChartLabels: Label[] = ['Peatón', 'Pasajero de otro vehiculo', 'Motociclista', 'Conductor de otro vehiculo', 'Ciclista'];
-    public pieChartData: number[] = [1, 2, 3, 3, 1];
-    public pieChartType: ChartType = 'pie';
-    public pieChartLegend = true;
-    public pieChartPlugins = [];
-    public pieChartColors = [
+    public doughnutChartLabels: Label[] = ['Media superior', 'Capacitación del trabajo', ];
+    public doughnutChartData: number[] = [4, 2];
+    public doughnutChartType: ChartType = 'doughnut';
+    public doughnutChartLegend = true;
+    public doughnutChartPlugins = [];
+    public doughnutChartColors = [
         {
             backgroundColor: [
-                sinisterColors.peaton,
-                sinisterColors.pasajero,
-                sinisterColors.motociclista,
-                sinisterColors.conductor,
-                sinisterColors.ciclista]
+                sinisterColors.med_sup,
+                sinisterColors.cap_trab, ]
         },
     ];
     // pie
@@ -796,6 +777,15 @@ export class DashboardComponent implements OnInit {
         private _bottomSheet: MatBottomSheet,
         private _spinnerService: SpinnerService) {
 
+        this.data = 'sidebar';
+        this.formulario = new FormGroup({
+            nombre: new FormControl(),
+            apellido: new FormControl(),
+            empresa: new FormControl(),
+            telefono: new FormControl(),
+            email: new FormControl(),
+        });
+
         // this.openBottomSheet();
 
         // saca el total de intersections - cruces
@@ -966,6 +956,9 @@ export class DashboardComponent implements OnInit {
         // )
     }
 
+    onSubmit() {
+        this._requestService.setDataService(this.formulario.value);
+    }
 
     getResponseQuestions(viewParams) {
         console.log('viewParams');
@@ -1085,7 +1078,7 @@ export class DashboardComponent implements OnInit {
             if (data.numberReturned === 0) {
                 this.municipio = 'SELECCIONE UN MUNICIPIO';
                 this.tot_cases_mun = '0';
-                this.pieChartData = [];
+                this.doughnutChartData = [];
                 this.lineChartData = [];
 
             } else {
@@ -1121,13 +1114,13 @@ export class DashboardComponent implements OnInit {
                                                 this.dataProperties['acumulados_ne'] = feature.properties.ne;
                                                 this.tot_cases_mun_acum = feature.properties.activos;
 
-                                                this.pieChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
+                                                this.doughnutChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
                                                 this.loadCharts(this.dataProperties, this.dataProperties7, this.dataProperties14);
                                             });
                                         });
 
                                     } else {
-                                        this.pieChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
+                                        this.doughnutChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
                                         this.loadCharts(this.dataProperties, this.dataProperties7, this.dataProperties14);
                                     }
 
@@ -1145,13 +1138,13 @@ export class DashboardComponent implements OnInit {
                                                     this.dataProperties['acumulados_ne'] = feature.properties.ne;
                                                     this.tot_cases_mun_acum = feature.properties.activos;
 
-                                                    this.pieChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
+                                                    this.doughnutChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
                                                     this.loadCharts(this.dataProperties, this.dataProperties7, this.dataProperties14);
                                                 });
                                             });
 
                                         } else {
-                                            this.pieChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
+                                            this.doughnutChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
                                             this.loadCharts(this.dataProperties, this.dataProperties7, this.dataProperties14);
                                         }
                                     });
@@ -1177,13 +1170,13 @@ export class DashboardComponent implements OnInit {
                                                     this.dataProperties['acumulados_ne'] = feature.properties.ne;
                                                     this.tot_cases_mun_acum = feature.properties.activos;
 
-                                                    this.pieChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
+                                                    this.doughnutChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
                                                     this.loadCharts(this.dataProperties, this.dataProperties7, this.dataProperties14);
                                                 });
                                             });
 
                                         } else {
-                                            this.pieChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
+                                            this.doughnutChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
                                             this.loadCharts(this.dataProperties, this.dataProperties7, this.dataProperties14);
                                         }
                                     });
@@ -1255,13 +1248,13 @@ export class DashboardComponent implements OnInit {
                                             this.dataProperties['acumulados_ne'] = feature.properties.ne;
                                             this.tot_cases_mun_acum = feature.properties.activos;
 
-                                            this.pieChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
+                                            this.doughnutChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
                                             this.loadCharts(this.dataProperties, this.dataProperties7, this.dataProperties14);
                                         });
                                     });
 
                                 } else {
-                                    this.pieChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
+                                    this.doughnutChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
                                     this.loadCharts(this.dataProperties, this.dataProperties7, this.dataProperties14);
                                 }
 
@@ -1279,13 +1272,13 @@ export class DashboardComponent implements OnInit {
                                                 this.dataProperties['acumulados_ne'] = feature.properties.ne;
                                                 this.tot_cases_mun_acum = feature.properties.activos;
 
-                                                this.pieChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
+                                                this.doughnutChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
                                                 this.loadCharts(this.dataProperties, this.dataProperties7, this.dataProperties14);
                                             });
                                         });
 
                                     } else {
-                                        this.pieChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
+                                        this.doughnutChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
                                         this.loadCharts(this.dataProperties, this.dataProperties7, this.dataProperties14);
                                     }
                                 });
@@ -1307,7 +1300,7 @@ export class DashboardComponent implements OnInit {
                                     this.dataProperties14['mujeres'] = 0;
                                     this.dataProperties14['ne'] = 0;
 
-                                    this.pieChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
+                                    this.doughnutChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
                                     this.loadCharts(this.dataProperties, this.dataProperties7, this.dataProperties14);
                                 } else {
 
@@ -1323,13 +1316,13 @@ export class DashboardComponent implements OnInit {
                                                     this.dataProperties['acumulados_ne'] = feature.properties.ne;
                                                     this.tot_cases_mun_acum = feature.properties.activos;
 
-                                                    this.pieChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
+                                                    this.doughnutChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
                                                     this.loadCharts(this.dataProperties, this.dataProperties7, this.dataProperties14);
                                                 });
                                             });
 
                                         } else {
-                                            this.pieChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
+                                            this.doughnutChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
                                             this.loadCharts(this.dataProperties, this.dataProperties7, this.dataProperties14);
                                         }
                                     });
@@ -1360,7 +1353,7 @@ export class DashboardComponent implements OnInit {
 
     loadPieChart(dataProperties) {
         // this.lineChartLabels = [date_covid_graf14, date_covid_graf7, date_covid_graf];
-        this.pieChartData = [this.dataProperties.mujeres, dataProperties.hombres, dataProperties.ne];
+        this.doughnutChartData = [this.dataProperties.mujeres, dataProperties.hombres];
     }
     loadCharts(dataProperties, dataProperties7, dataProperties14) {
 
@@ -1389,7 +1382,7 @@ export class DashboardComponent implements OnInit {
 
         this.lineChartLabels = [date_covid_graf14, date_covid_graf7, date_covid_graf];
 
-        this.pieChartData = [this.dataProperties.mujeres, dataProperties.hombres, dataProperties.ne];
+        this.doughnutChartData = [this.dataProperties.mujeres, dataProperties.hombres, dataProperties.ne];
 
         this.lineChartData = [
             { data: [dataProperties14.mujeres, dataProperties7.mujeres, dataProperties.mujeres], label: 'Mujeres' },

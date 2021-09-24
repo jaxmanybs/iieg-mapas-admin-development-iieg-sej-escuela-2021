@@ -25,6 +25,8 @@ import { equal } from 'assert';
 import { equals } from 'ol/extent';
 // import { url } from 'inspector';
 
+import { Data } from '../../services/request.service';
+
 declare var ol;
 
 @Component({
@@ -157,6 +159,11 @@ export class MapComponent implements OnInit, OnChanges {
 
     show = true;
 
+
+    arrPersonas: Data[];
+
+
+
     constructor(
         private _route: ActivatedRoute,
         private _router: Router,
@@ -167,29 +174,46 @@ export class MapComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges): void {
 
         console.log('OnChanges--this.dataFilter');
+
+        console.log('dashboard ngOnChanges()');
+
+        this._requestService.getData$().subscribe(data => {
+            console.log('data');
+            console.log(data);
+
+            this.arrPersonas = data;
+        });
+
+
+
         // console.log('this.dataFilter', this.dataFilter);
 
-        // if (this.firtsChange) {
-        switch (this.dataFilter) {
-            case 'med-sup':
-                // this.municipios.getSource().updateParams({ STYLES: this.myStyles[1] });
-                // this.medSup.getSource().updateParams({ LAYERS: this.geoserverLayers[1], STYLES: this.myStyles[2] });
-                this.medSup.getSource().updateParams({ LAYERS: this.geoserverLayers[3] });
-                break;
-            case 'cap-trab':
-                // this.municipios.getSource().updateParams({ STYLES: this.myStyles[2] });
-                // this.medSup.getSource().updateParams({ LAYERS: this.geoserverLayers[2], STYLES: this.myStyles[2] });
-                this.medSup.getSource().updateParams({ LAYERS: this.geoserverLayers[4] });
-                break;
-            default:
-                break;
+        if (this.firtsChange) {
+            // console.log('if this.firtsChange');
+            // console.log(this.firtsChange);
+
+            switch (this.dataFilter) {
+                case 'med-sup':
+                    // this.municipios.getSource().updateParams({ STYLES: this.myStyles[1] });
+                    // this.medSup.getSource().updateParams({ LAYERS: this.geoserverLayers[1], STYLES: this.myStyles[2] });
+                    this.medSup.getSource().updateParams({ LAYERS: this.geoserverLayers[1] });
+                    break;
+                case 'cap-trab':
+                    // this.municipios.getSource().updateParams({ STYLES: this.myStyles[2] });
+                    // this.medSup.getSource().updateParams({ LAYERS: this.geoserverLayers[2], STYLES: this.myStyles[2] });
+                    this.medSup.getSource().updateParams({ LAYERS: this.geoserverLayers[4] });
+                    break;
+                default:
+                    break;
+            }
+
+
+        } else {
+            // console.log('else this.firtsChange');
+            // console.log(this.firtsChange);
+            this.firtsChange = true;
+
         }
-
-
-        // } else {
-        //     this.firtsChange = true;
-
-        // }
 
 
 
@@ -365,10 +389,10 @@ export class MapComponent implements OnInit, OnChanges {
                 // url: 'https://indices.jalisco.gob.mx/geoserver/iieg/wms?',
                 url: 'http://10.9.4.208:8080/geoserver/sej/wms?',
                 params: {
+                    // LAYERS: this.geoserverLayers[2],
+                    // STYLES: this.myStyles[1],
                     LAYERS: this.geoserverLayers[4],
                     STYLES: this.myStyles[4]
-                    // LAYERS: 'iieg:cap_trab_shp',
-                    // STYLES: 'iieg_it:sinister_intersections_2',
                 },
                 serverType: 'geoserver'
             })
@@ -380,13 +404,13 @@ export class MapComponent implements OnInit, OnChanges {
             visible: true,
             source: new ol.source.ImageWMS({
                 // url: this.urlIieg,
-                // url: 'https://indices.jalisco.gob.mx/geoserver/iieg/wms?',
-                url: 'http://10.9.4.208:8080/geoserver/sej/wms?',
+                url: 'https://indices.jalisco.gob.mx/geoserver/iieg/wms?',
+                // url: 'http://10.9.4.208:8080/geoserver/sej/wms?',
                 params: {
-                    LAYERS: this.geoserverLayers[3],
-                    STYLES: this.myStyles[4]
-                    // LAYERS: 'iieg:cap_trab_shp',
-                    // STYLES: 'iieg_it:sinister_intersections_2',
+                    LAYERS: this.geoserverLayers[1],
+                    STYLES: this.myStyles[1],
+                    // LAYERS: this.geoserverLayers[3],
+                    // STYLES: this.myStyles[4],
                 },
                 serverType: 'geoserver'
             })
@@ -420,11 +444,12 @@ export class MapComponent implements OnInit, OnChanges {
     createMap() {
 
         this.map = new Map({
-            controls: defaultControls().extend([
-                new FullScreen({
-                    source: 'fullscreen'
-                })
-            ]),
+            // controls: defaultControls().extend([
+            //     new FullScreen({
+            //         source: 'fullscreen'
+            //     })
+            // ]),
+            controls: [],
             layers: [
                 this.osmLayer,
                 // this.capTrab,
@@ -435,7 +460,7 @@ export class MapComponent implements OnInit, OnChanges {
         });
 
         this.map.setView(this.view);
-        this.map.addControl(new ol.control.ZoomSlider());
+        // this.map.addControl(new ol.control.ZoomSlider());
 
         this.source = this.capTrab.getSource();
         this.params = this.source.getParams();
