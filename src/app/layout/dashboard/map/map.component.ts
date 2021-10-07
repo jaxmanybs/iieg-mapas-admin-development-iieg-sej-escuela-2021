@@ -197,11 +197,13 @@ export class MapComponent implements OnInit, OnChanges {
                     // this.municipios.getSource().updateParams({ STYLES: this.myStyles[1] });
                     // this.medSup.getSource().updateParams({ LAYERS: this.geoserverLayers[1], STYLES: this.myStyles[2] });
                     this.medSup.getSource().updateParams({ LAYERS: this.geoserverLayers[1] });
+                    // this.medSup.getSource().updateParams({ LAYERS: this.geoserverLayers[3] });
                     break;
                 case 'cap-trab':
                     // this.municipios.getSource().updateParams({ STYLES: this.myStyles[2] });
                     // this.medSup.getSource().updateParams({ LAYERS: this.geoserverLayers[2], STYLES: this.myStyles[2] });
-                    this.medSup.getSource().updateParams({ LAYERS: this.geoserverLayers[4] });
+                    this.medSup.getSource().updateParams({ LAYERS: this.geoserverLayers[2] });
+                    // this.medSup.getSource().updateParams({ LAYERS: this.geoserverLayers[4] });
                     break;
                 default:
                     break;
@@ -386,13 +388,13 @@ export class MapComponent implements OnInit, OnChanges {
             visible: true,
             source: new ol.source.ImageWMS({
                 // url: this.urlIieg,
-                // url: 'https://indices.jalisco.gob.mx/geoserver/iieg/wms?',
-                url: 'http://10.9.4.208:8080/geoserver/sej/wms?',
+                url: 'https://indices.jalisco.gob.mx/geoserver/iieg/wms?',
+                // url: 'http://10.9.4.208:8080/geoserver/sej/wms?',
                 params: {
-                    // LAYERS: this.geoserverLayers[2],
-                    // STYLES: this.myStyles[1],
-                    LAYERS: this.geoserverLayers[4],
-                    STYLES: this.myStyles[4]
+                    LAYERS: this.geoserverLayers[2],
+                    STYLES: this.myStyles[1],
+                    // LAYERS: this.geoserverLayers[3],
+                    // STYLES: this.myStyles[3]
                 },
                 serverType: 'geoserver'
             })
@@ -410,7 +412,7 @@ export class MapComponent implements OnInit, OnChanges {
                     LAYERS: this.geoserverLayers[1],
                     STYLES: this.myStyles[1],
                     // LAYERS: this.geoserverLayers[3],
-                    // STYLES: this.myStyles[4],
+                    // STYLES: this.myStyles[3],
                 },
                 serverType: 'geoserver'
             })
