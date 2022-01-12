@@ -28,9 +28,6 @@ $color-rose: #f08077;
     display: flex;
     color: $color-purple;
 }
-// .fix-nav {
-//     height: 6rem;
-// }
 .mat-icon {
     // color: $color-gray3;
     color: $color-purple;
@@ -76,37 +73,67 @@ $color-rose: #f08077;
     .visible-md {
         display: block;
     }
-}
-@media screen and (max-width: 768px) {
-    .visible-sm {
-        display: block;
-    }
-    .nav-brand {
-        width: 100%;
-    }
     .logo-first {
         margin-left: 0rem;
         height: 1.9em;
     }
+}
+@media screen and (max-width: 800px) {
     .logo-iieg {
-        height: 2.8rem;
+        height: 5rem;
+    }
+    .logo-sej {
+        height: 2.5em;
+    }
+    .logo-jaliscogob {
+        height: 2em;
+    }
+}
+@media screen and (max-width: 700px) {
+    .logo-iieg {
+        height: 4.5rem;
+    }
+    .logo-sej {
+        height: 2.2em;
     }
     .logo-jaliscogob {
         height: 1.8em;
     }
 }
-@media screen and (max-width: 768px) {
-    .hidden-sm {
-        display: none;
-    }
-}
-@media screen and (max-width: 360px) {
+@media screen and (max-width: 600px) {
     .logo-first {
-        margin-left: 0rem;
-        height: 1.9em;
+        height: 1.6em;
     }
     .logo-iieg {
-        height: 2rem;
+        height: 4rem;
+    }
+    .logo-sej {
+        height: 2em;
+    }
+    .logo-jaliscogob {
+        height: 1.5em;
+    }
+}
+@media screen and (max-width: 550px) {
+    .logo-iieg {
+        height: 3rem;
+    }
+    .logo-sej {
+        height: 1.6em;
+    }
+    .logo-jaliscogob {
+        height: 1.2em;
+    }
+}
+@media screen and (max-width: 450px) {
+    .logo-first {
+        height: 1.2em;
+    }
+    .logo-iieg {
+        height: 3rem;
+    }
+    .logo-sej {
+        height: 1.6em;
     }
     .logo-jaliscogob {
         height: 1.2em;

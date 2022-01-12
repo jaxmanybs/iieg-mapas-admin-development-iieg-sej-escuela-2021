@@ -22,7 +22,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
 
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogNotaMetodComponent } from './components/dialog-nota-metod/dialog-nota-metod.component';
 
 import { MatRadioModule } from '@angular/material/radio';
@@ -56,4 +56,4 @@ import { BottonSheetExampleComponent } from './dashboard/botton-sheet-example/bo
         BottonSheetExampleComponent],
     exports: [SidebarComponent, LayoutComponent]
 })
-export class LayoutModule {  }
+export class LayoutModule { }

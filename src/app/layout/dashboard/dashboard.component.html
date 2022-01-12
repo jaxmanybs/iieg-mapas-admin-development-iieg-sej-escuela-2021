@@ -9,24 +9,63 @@
     <!-- </ngx-spinner> -->
 
     <div class="content">
-        <div class="data">
-            <!-- <mat-list>
-                <mat-list-item></mat-list-item>
-                <mat-divider></mat-divider>
-                <mat-list-item>Item 2</mat-list-item>
-                <mat-divider></mat-divider>
-                <mat-list-item>Item 3</mat-list-item>
-            </mat-list> -->
-            <div class="data1">
-                <div class="data11">
-                    <mat-card class="data1-1">
+        <div class="data" *ngIf="!dataSchoolActive">
+            <form
+                [formGroup]="formGroupFilter"
+                (ngSubmit)="onSubmit()"
+                class="filter_by_word"
+            >
+                <div class="select_filter">
+                    <mat-form-field appearance="standard">
+                        <mat-label>Seleccionar filtro</mat-label>
+                        <mat-select name="filter" formControlName="filter">
+                            <mat-option
+                                *ngFor="let filter of filters"
+                                [value]="filter.value"
+                            >
+                                {{ filter.viewValue }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="search_filter">
+                    <mat-form-field appearance="standard">
+                        <mat-label>Buscar por palabra</mat-label>
+                        <input matInput formControlName="filterString" />
+                    </mat-form-field>
+                </div>
+                <div class="button_filter">
+                    <button
+                        mat-raised-button
+                        type="submit"
+                        class="btn btn-sm btn-search"
+                    >
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="data" *ngIf="!dataSchoolActive">
+            <button
+                class="btn_filter"
+                matTooltip="Seleccionar filtros"
+                mat-raised-button
+                (click)="openBottomSheet()"
+            >
+                Filtrar
+            </button>
+        </div>
+        <div class="data" *ngIf="!dataSchoolActive">
+            <div class="info">
+                <div class="schools">
+                    <mat-card class="schools_content">
                         <img
                             mat-card-lg-image
                             class="icons"
                             src="./assets/images/sej/icons/icon_student_sup.svg"
                             alt=""
                         />
-                        <!-- <mat-card-header> </mat-card-header> -->
                         <mat-card-content>
                             <mat-card-subtitle class="name-dep"
                                 ><span
@@ -34,113 +73,79 @@
                                 ></mat-card-subtitle
                             >
                             <mat-card-title
-                                ><div class="data1-1">
-                                    <span class="num-student">330,138</span>
+                                ><div class="schools_content">
+                                    <span class="num-student">{{
+                                        totEstudiantesMedSup | milesPipe
+                                    }}</span>
                                 </div></mat-card-title
                             >
                         </mat-card-content>
-                        <!-- <mat-card-actions>
-                            <button mat-button>LIKE</button>
-                            <button mat-button>SHARE</button>
-                        </mat-card-actions> -->
                     </mat-card>
                 </div>
             </div>
-            <div class="data1">
-                <div class="data11">
-                    <mat-card class="data1-1">
+            <div class="info">
+                <div class="schools">
+                    <mat-card class="schools_content">
                         <img
                             mat-card-lg-image
                             class="icons"
                             src="./assets/images/sej/icons/icon_student_trab.svg"
                             alt=""
                         />
-                        <!-- <mat-card-header> </mat-card-header> -->
                         <mat-card-content>
                             <mat-card-subtitle
                                 ><span
-                                    >Alumnos Educación Media Superior</span
+                                    >Alumnos Formación para el Trabajo</span
                                 ></mat-card-subtitle
                             >
                             <mat-card-title
-                                ><div class="data1-1">
-                                    <span class="num-student">88,905</span>
+                                ><div class="schools_content">
+                                    <span class="num-student">{{
+                                        totEstudiantesCapTrab | milesPipe
+                                    }}</span>
                                 </div></mat-card-title
                             >
                         </mat-card-content>
-                        <!-- <mat-card-actions>
-                            <button mat-button>LIKE</button>
-                            <button mat-button>SHARE</button>
-                        </mat-card-actions> -->
                     </mat-card>
-
-                    <!-- <div class="data1-1">
-                        <img
-                            class="icons"
-                            src="./assets/images/sej/icons/icon_student_trab.svg"
-                            alt=""
-                        />
-                    </div>
-                    <div class="data1-1">
-                        <span>Alumnos Formación para el Trabajo</span>
-                    </div>
-                    <div class="data1-1">
-                        <span class="amount">88,905</span>
-                    </div> -->
                 </div>
             </div>
         </div>
-        <div class="data">
-            <div class="data1">
-                <div class="data11">
-                    <mat-card class="data1-1">
+        <div class="data" *ngIf="!dataSchoolActive">
+            <div class="info">
+                <div class="schools">
+                    <mat-card class="schools_content">
                         <img
                             mat-card-lg-image
                             class="icons"
                             src="./assets/images/sej/icons/icon_school_sup.svg"
                             alt=""
                         />
-                        <!-- <mat-card-header> </mat-card-header> -->
                         <mat-card-content>
                             <mat-card-subtitle
                                 ><span
-                                    >Alumnos Educación Media Superior</span
+                                    >Escuelas Educación Media Superior</span
                                 ></mat-card-subtitle
                             >
                             <mat-card-title
-                                ><div class="data1-1">
-                                    <span class="num-schools">844</span>
+                                ><div class="schools_content">
+                                    <span class="num-schools">{{
+                                        totEscuelasMedSup | milesPipe
+                                    }}</span>
                                 </div></mat-card-title
                             >
                         </mat-card-content>
-                        <!-- <mat-card-actions>
-                            <button mat-button>LIKE</button>
-                            <button mat-button>SHARE</button>
-                        </mat-card-actions> -->
                     </mat-card>
-                    <!-- <div class="data1-1">
-                        <img
-                            class="icons"
-                            src="./assets/images/sej/icons/icon_school_sup.svg"
-                            alt=""
-                        />
-                    </div>
-                    <div class="data1-1">
-                        <span>Escuelas Educación Media Superior</span>
-                    </div>
-                    <div class="data1-1"><span class="amount">844</span></div> -->
                 </div>
             </div>
-            <div class="data1">
-                <div class="data11">
-                    <mat-card class="data1-1">
+            <div class="info">
+                <div class="schools">
+                    <mat-card class="schools_content">
                         <img
                             mat-card-lg-image
                             class="icons"
                             src="./assets/images/sej/icons/icon_school_trab.svg"
                             alt=""
                         />
-                        <!-- <mat-card-header> </mat-card-header> -->
                         <mat-card-content>
                             <mat-card-subtitle
                                 ><span
@@ -148,39 +153,21 @@
                                 ></mat-card-subtitle
                             >
                             <mat-card-title
-                                ><div class="data1-1">
-                                    <span class="num-schools">258</span>
+                                ><div class="schools_content">
+                                    <span class="num-schools">{{
+                                        totEscuelasCapTrab | milesPipe
+                                    }}</span>
                                 </div></mat-card-title
                             >
                         </mat-card-content>
-                        <!-- <mat-card-actions>
-                            <button mat-button>LIKE</button>
-                            <button mat-button>SHARE</button>
-                        </mat-card-actions> -->
                     </mat-card>
-
-                    <!-- <div class="data1-1">
-                        <img
-                            class="icons"
-                            src="./assets/images/sej/icons/icon_school_trab.svg"
-                            alt=""
-                        />
-                    </div>
-                    <div class="data1-1">
-                        <span>Escuelas Formación para el Trabajo</span>
-                    </div>
-                    <div class="data1-1">
-                        <div class="amount-div">
-                            <span class="amount">258</span>
-                        </div>
-                    </div> -->
                 </div>
             </div>
         </div>
-        <div class="data">
-            <div class="data1">
-                <div class="data11">
-                    <mat-card class="data1-1">
+        <div class="data" *ngIf="!dataSchoolActive">
+            <div class="info">
+                <div class="schools">
+                    <mat-card class="schools_content">
                         <div class="doughnut-pie">
                             <canvas
                                 baseChart
@@ -192,41 +179,40 @@
                             >
                             </canvas>
                         </div>
-                        <!-- <mat-card-header> </mat-card-header> -->
-                        <mat-card-content>
-                            <div>
-                                <mat-card-subtitle>
-                                    <div class="data1-1-icons">
-                                        <img
-                                            mat-card-sm-image
-                                            class="icons"
-                                            src="./assets/images/sej/icons/icon_men.svg"
-                                            alt=""
-                                        />
-                                        <span class="num-graf">26,189</span>
-                                    </div>
-                                    <div class="data1-1-icons">
-                                        <img
-                                            mat-card-sm-image
-                                            class="icons"
-                                            src="./assets/images/sej/icons/icon_woman.svg"
-                                            alt=""
-                                        />
-                                        <span class="num-graf">62,716</span>
-                                    </div>
-                                </mat-card-subtitle>
+                        <mat-card-content class="student">
+                            <div class="schools_content-icons">
+                                <img
+                                    mat-card-sm-image
+                                    class="icons"
+                                    src="./assets/images/sej/icons/icon_men.svg"
+                                    alt=""
+                                />
+                                <span class="num-graf">{{
+                                    totHombresMedSup | milesPipe
+                                }}</span>
+                            </div>
+                            <div class="schools_content-icons">
+                                <img
+                                    mat-card-sm-image
+                                    class="icons"
+                                    src="./assets/images/sej/icons/icon_woman.svg"
+                                    alt=""
+                                />
+                                <span class="num-graf">{{
+                                    totMujeresMedSup | milesPipe
+                                }}</span>
                             </div>
                         </mat-card-content>
                     </mat-card>
                 </div>
             </div>
-            <div class="data1">
-                <div class="data11">
-                    <mat-card class="data1-1">
+            <div class="info">
+                <div class="schools">
+                    <mat-card class="schools_content">
                         <div class="doughnut-pie">
                             <canvas
                                 baseChart
-                                [data]="doughnutChartData"
+                                [data]="doughnutChartData2"
                                 [chartType]="doughnutChartType"
                                 [options]="doughnutChartOptions"
                                 [colors]="doughnutChartColors"
@@ -234,337 +220,299 @@
                             >
                             </canvas>
                         </div>
-                        <!-- <mat-card-header> </mat-card-header> -->
-                        <mat-card-content>
-                            <div>
-                                <mat-card-subtitle>
-                                    <div class="data1-1-icons">
-                                        <img
-                                            mat-card-sm-image
-                                            class="icons"
-                                            src="./assets/images/sej/icons/icon_men.svg"
-                                            alt=""
-                                        />
-                                        <span class="num-graf">155,716</span>
-                                    </div>
-                                    <div class="data1-1-icons">
-                                        <img
-                                            mat-card-sm-image
-                                            class="icons"
-                                            src="./assets/images/sej/icons/icon_woman.svg"
-                                            alt=""
-                                        />
-                                        <span class="num-graf">762,716</span>
-                                    </div>
-
-                                    <!-- <span
-                                        >Escuelas Formación para el
-                                        Trabajo</span> -->
-                                </mat-card-subtitle>
-                                <!-- <mat-card-title
-                                    ><div class="data1-1">
-                                        <span class="num-student">123</span>
-                                    </div></mat-card-title -->
-                                >
+                        <mat-card-content class="student">
+                            <div class="schools_content-icons">
+                                <img
+                                    mat-card-sm-image
+                                    class="icons"
+                                    src="./assets/images/sej/icons/icon_men.svg"
+                                    alt=""
+                                />
+                                <span class="num-graf">{{
+                                    totHombresCapTrab | milesPipe
+                                }}</span>
+                            </div>
+                            <div class="schools_content-icons">
+                                <img
+                                    mat-card-sm-image
+                                    class="icons"
+                                    src="./assets/images/sej/icons/icon_woman.svg"
+                                    alt=""
+                                />
+                                <span class="num-graf">{{
+                                    totMujeresCapTrab | milesPipe
+                                }}</span>
                             </div>
                         </mat-card-content>
-                        <!-- <mat-card-actions>
-                            <button mat-button>LIKE</button>
-                            <button mat-button>SHARE</button>
-                        </mat-card-actions> -->
                     </mat-card>
-                    <!--
-                    <div class="data1-1">Grafica</div>
-                    <div class="data1-1">Hom - Muj</div>
-                    <div class="data1-1">1,000</div> -->
                 </div>
             </div>
         </div>
-        <!-- <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
-            <div class="form-group">
-                <label>Nombre</label>
-                <input type="text" formControlName="nombre" />
-            </div>
-            <div class="form-group">
-                <label>Apellido</label>
-                <input type="text" formControlName="apellido" />
-            </div>
-            <div class="form-group">
-                <label>Empresa</label>
-                <input
-                    type="text"
-                    class="form-control"
-                    formControlName="empresa"
-                />
-            </div>
-            <div class="form-group">
-                <label>Telefono</label>
-                <input
-                    type="text"
-                    class="form-control"
-                    formControlName="telefono"
-                />
-            </div>
-            <div class="form-group">
-                <label>Email</label>
-                <input type="text" formControlName="email" />
-            </div>
-            <input type="submit" value="Enviar" />
-        </form> -->
 
-        <!-- <div class="mb-1">
-            <h2 class="animated-link" (click)="drawer.toggle()" >Nota importante</h2>
-        </div> -->
-
-        <!-- <mat-drawer-container class="dashboard-container" autosize>
-            <mat-drawer #drawer class="dashboard-sidenav" mode="side">
-                <p class="black-text-padding">
-                    Instrucciones para filtrar o la nota que estaba en rojo.
-                </p>
-            </mat-drawer> -->
-
-        <!-- <div class="controls"> -->
-        <!-- <div class="filter">
-                <div class="filter-content">
-                    <button
-                        class="btn_filter"
-                        mat-raised-button
-                        (click)="openBottomSheet()"
-                    >
-                        Filtrar
-                    </button>
-                    <div class="town-name">
-                        <div *ngIf="municipio != ''">
-                            Municipio:
-                            <span class="town-txt">{{ municipio }}</span>
-                        </div>
-                        <div *ngIf="municipio == ''">&nbsp;</div>
-                    </div>
-                </div>
-            </div> -->
-        <!-- <div class="card-stats-content"> -->
-        <!-- <div class="town-name">
-                    Municipio: <span class="town-txt">{{ municipio }}</span>
-                </div> -->
-        <!-- <div class="card-stats">
-                    <div class="stat">
-                        <div>
-                            <div>
-                                <img
-                                    class="sinister_logos"
-                                    src="./assets/images/sinister_intersections.svg"
-                                    alt=""
-                                />
-                            </div>
-                            <div>Intercecciones</div>
-                            <div class="result-sinister">
-                                {{ intersections }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="stat">
-                        <div>
-                            <div>
-                                <img
-                                    class="sinister_logos"
-                                    src="./assets/images/sinister_sinistries.svg"
-                                    alt=""
-                                />
-                            </div>
-                            <div>Siniestros</div>
-                            <div class="result-sinister">{{ sinistries }}</div>
-                        </div>
-                    </div>
-                    <div class="stat">
-                        <div>
-                            <div>
-                                <img
-                                    class="sinister_logos"
-                                    src="./assets/images/sinister_involved.svg"
-                                    alt=""
-                                />
-                            </div>
-                            <div>Involucrados</div>
-                            <div class="result-sinister">{{ involved }}</div>
-                        </div>
-                    </div>
-                    <div class="stat">
-                        <div>
-                            <div>
-                                <img
-                                    class="sinister_logos"
-                                    src="./assets/images/sinister_fatalities.svg"
-                                    alt=""
-                                />
-                            </div>
-                            <div>Fatalidades</div>
-                            <div class="result-sinister">{{ fatalities }}</div>
-                        </div>
-                    </div>
-                    <div class="stat">
-                        <div>
-                            <div>
-                                <img
-                                    class="sinister_logos"
-                                    src="./assets/images/sinister_wounds.svg"
-                                    alt=""
-                                />
-                            </div>
-                            <div>Lesiones</div>
-                            <div class="result-sinister">{{ wounds }}</div>
-                        </div>
-                    </div>
+        <div class="data-school" *ngIf="dataSchoolActive">
+            <div class="data-school-1">
+                <div class="div-label-sub">
+                    <div class="label-sub">Subsecretaría de Educación</div>
                 </div>
             </div>
-        </div> -->
-        <!-- <div class="charts-pie-content">
-            <div class="charts-pie">
-                <div class="pie1">
-                    <div>Fatalidades</div>
-                    <h3>tipo de usuario</h3>
-                    <div class="chart-pie">
-                        <canvas
-                            baseChart
-                            [data]="pieChartData"
-                            [chartType]="pieChartType"
-                            [options]="pieChartOptions"
-                            [colors]="pieChartColors"
-                            [legend]="pieChartLegend"
+
+            <div class="data-school-2">
+                <div class="data-school-2-content">
+                    <div class="close-data">
+                        <span
+                            class="close"
+                            matTooltip="Ir al filtrado"
+                            (click)="closeData()"
+                            >X</span
                         >
-                        </canvas>
                     </div>
                 </div>
-                <div class="pie2">
-                    <div>Lesiones</div>
-                    <h3>tipo de usuario</h3>
-                    <div class="chart-pie">
-                        <div class="">
-                            <canvas
-                                baseChart
-                                [data]="pieChartData"
-                                [chartType]="pieChartType"
-                                [options]="pieChartOptions"
-                                [colors]="pieChartColors"
-                                [legend]="pieChartLegend"
-                            >
-                            </canvas>
+            </div>
+        </div>
+
+        <div *ngFor="let dataSchool of dataSchool1">
+            <div class="data-school" *ngIf="dataSchoolActive">
+                <div class="data-school-1">
+                    <div class="data-school-1-content">
+                        <div class="school-name">CLAVE ESCUELA</div>
+                        <div class="school-data">
+                            {{ dataSchool.properties.clave_escuela }}
+                        </div>
+                    </div>
+
+                    <div class="data-school-1-content">
+                        <div class="school-name">PLANTEL</div>
+                        <div class="school-data">
+                            {{ dataSchool.properties.nombre_escuela }}
+                        </div>
+                    </div>
+
+                    <div class="data-school-1-content">
+                        <div class="school-name">MODALIDAD</div>
+                        <div class="school-data">
+                            {{ dataSchool.properties.programa }}
+                        </div>
+                    </div>
+
+                    <div class="data-school-1-content">
+                        <div class="school-name">CARRERAS</div>
+
+                        <div *ngFor="let career of careers1">
+                            {{ career }}
+                        </div>
+                    </div>
+
+                    <div class="data-school-1-content">
+                        <div class="school-name">DOMICILIO</div>
+                        <div class="school-data">
+                            {{ dataSchool.properties.domicilio }}
+                        </div>
+                        <div class="school-data">
+                            {{ dataSchool.properties.nombre_municipio }}
+                        </div>
+                        <div class="school-data">
+                            {{ dataSchool.properties.codigo_postal }}
+                        </div>
+                        <div class="school-data">
+                            {{ dataSchool.properties.telefono }}
                         </div>
                     </div>
                 </div>
-                <div class="pie-text">
-                    <div>Tipo de usuario</div>
-                    <div class="user_type">
-                        <mat-list>
-                            <mat-list-item
-                                *ngFor="let sinister of sinistriesLabel"
-                            >
-                                <div mat-line>
+                <div class="data-school-2">
+                    <div class="schools">
+                        <mat-card class="schools_content">
+                            <img
+                                mat-card-lg-image
+                                class="icons"
+                                src="./assets/images/sej/icons/icon_student_sup.svg"
+                                alt=""
+                            />
+                            <mat-card-content>
+                                <mat-card-subtitle
+                                    ><span>Alumnos</span></mat-card-subtitle
+                                >
+                                <mat-card-title
+                                    ><div class="schools_content">
+                                        <span class="num-student">{{
+                                            alumnosTotClickMap1 | milesPipe
+                                        }}</span>
+                                    </div></mat-card-title
+                                >
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+
+                    <div class="schools">
+                        <mat-card class="schools_content">
+                            <div class="doughnut-pie">
+                                <canvas
+                                    baseChart
+                                    [data]="doughnutChartDataClickMap1"
+                                    [chartType]="doughnutChartType"
+                                    [options]="doughnutChartOptions"
+                                    [colors]="doughnutChartColors"
+                                    [legend]="doughnutChartLegend"
+                                >
+                                </canvas>
+                            </div>
+                            <mat-card-content class="student">
+                                <div class="schools_content-icons">
                                     <img
-                                        class="sinister_users"
-                                        src="{{ sinister.sinisterIcon }}"
+                                        mat-card-sm-image
+                                        class="icons"
+                                        src="./assets/images/sej/icons/icon_men.svg"
                                         alt=""
                                     />
-                                    <span class="sinister_users_txt">
-                                        {{ sinister.name }}
-                                    </span>
+                                    <span class="num-graf">{{
+                                        hombresClickMap1 | milesPipe
+                                    }}</span>
                                 </div>
+                                <div class="schools_content-icons">
+                                    <img
+                                        mat-card-sm-image
+                                        class="icons"
+                                        src="./assets/images/sej/icons/icon_woman.svg"
+                                        alt=""
+                                    />
+                                    <span class="num-graf">{{
+                                        mujeresClickMap1 | milesPipe
+                                    }}</span>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+            </div>
+            <div class="separator" *ngIf="dataSchoolActive">
+                <hr />
+            </div>
+        </div>
+        <div *ngIf="alumnosTotClickMap2 > 0">
+            <div *ngFor="let dataSchool of dataSchool2">
+                <div class="data-school" *ngIf="dataSchoolActive">
+                    <div class="data-school-1">
+                        <div class="data-school-1-content">
+                            <div class="school-name">CLAVE ESCUELA</div>
+                            <div class="school-data">
+                                {{ dataSchool.properties.clave_escuela }}
+                            </div>
+                        </div>
+
+                        <div class="data-school-1-content">
+                            <div class="school-name">PLANTEL</div>
+                            <div class="school-data">
+                                {{ dataSchool.properties.nombre_escuela }}
+                            </div>
+                        </div>
+
+                        <div class="data-school-1-content">
+                            <div class="school-name">MODALIDAD</div>
+                            <div class="school-data">
+                                {{ dataSchool.properties.programa }}
+                            </div>
+                        </div>
+
+                        <div class="data-school-1-content">
+                            <div class="school-name">CARRERAS</div>
+
+                            <div *ngFor="let career of careers2">
+                                {{ career }}
+                            </div>
+                        </div>
+
+                        <div class="data-school-1-content">
+                            <div class="school-name">DOMICILIO</div>
+                            <div class="school-data">
+                                {{ dataSchool.properties.domicilio }}
+                            </div>
+                            <div class="school-data">
+                                {{ dataSchool.properties.nombre_municipio }}
+                            </div>
+                            <div class="school-data">
+                                {{ dataSchool.properties.codigo_postal }}
+                            </div>
+                            <div class="school-data">
+                                {{ dataSchool.properties.telefono }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="data-school-2">
+                        <div class="schools">
+                            <mat-card class="schools_content">
                                 <img
-                                    class="sinister_users"
-                                    src="{{ sinister.sinisterIcon }}"
+                                    mat-card-lg-image
+                                    class="icons"
+                                    src="./assets/images/sej/icons/icon_student_sup.svg"
                                     alt=""
                                 />
-                                <mat-icon mat-list-icon [style.color]="'#3F51B5'">accessibility</mat-icon>
-                                <mat-icon
-                                    mat-list-icon
-                                    [style.color]="sinister.sinisterColor"
-                                    >{{ sinister.sinisterIcon }}</mat-icon
-                                >
-                            </mat-list-item>
-                        </mat-list>
-                    </div>
-                </div>
-            </div>
-        </div> -->
+                                <mat-card-content>
+                                    <mat-card-subtitle
+                                        ><span>Alumnos</span></mat-card-subtitle
+                                    >
+                                    <mat-card-title
+                                        ><div class="schools_content">
+                                            <span class="num-student">{{
+                                                alumnosTotClickMap1 | milesPipe
+                                            }}</span>
+                                        </div></mat-card-title
+                                    >
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
 
-        <!-- <app-chartbar2020></app-chartbar2020> -->
-        <!-- <div class="charts-bar-content">
-            <div class="charts-bar">
-                <div class="bar">
-                    <div>
-                        Fatalidades y/o lesiones por rango de edad y género
+                        <div class="schools">
+                            <mat-card class="schools_content">
+                                <div class="doughnut-pie">
+                                    <canvas
+                                        baseChart
+                                        [data]="doughnutChartDataClickMap1"
+                                        [chartType]="doughnutChartType"
+                                        [options]="doughnutChartOptions"
+                                        [colors]="doughnutChartColors"
+                                        [legend]="doughnutChartLegend"
+                                    >
+                                    </canvas>
+                                </div>
+                                <mat-card-content class="student">
+                                    <div class="schools_content-icons">
+                                        <img
+                                            mat-card-sm-image
+                                            class="icons"
+                                            src="./assets/images/sej/icons/icon_men.svg"
+                                            alt=""
+                                        />
+                                        <span class="num-graf">{{
+                                            hombresClickMap1 | milesPipe
+                                        }}</span>
+                                    </div>
+                                    <div class="schools_content-icons">
+                                        <img
+                                            mat-card-sm-image
+                                            class="icons"
+                                            src="./assets/images/sej/icons/icon_woman.svg"
+                                            alt=""
+                                        />
+                                        <span class="num-graf">{{
+                                            mujeresClickMap1 | milesPipe
+                                        }}</span>
+                                    </div>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
                     </div>
-                    <div class="chart-bar">
-                        <canvas
-                            baseChart
-                            [datasets]="barChartData"
-                            [labels]="barChartLabels"
-                            [options]="barChartOptions"
-                            [plugins]="barChartPlugins"
-                            [legend]="barChartLegend"
-                            [chartType]="barChartType"
-                        >
-                        </canvas>
-                    </div>
+                </div>
+                <div class="separator" *ngIf="dataSchoolActive">
+                    <hr />
                 </div>
             </div>
-        </div> -->
-
-        <!-- <div class="charts-line-content" *ngIf="minDateSelect == true">
-            <div class="charts-line">
-                <div class="line">
-                    <div>
-                        Comparativa de fatalidades y/o lesiones entre meses y
-                        años
-                    </div>
-                    <canvas
-                        baseChart
-                        width="400"
-                        height="100"
-                        [datasets]="lineChartData"
-                        [labels]="lineChartLabels"
-                        [options]="lineChartOptions"
-                        [colors]="lineChartColors"
-                        [legend]="lineChartLegend"
-                        [chartType]="lineChartType"
-                        [plugins]="lineChartPlugins"
-                        (chartHover)="chartHovered($event)"
-                        (chartClick)="chartClicked($event)"
-                    >
-                    </canvas>
-                </div>
-            </div>
-        </div> -->
-
-        <!-- <div class="footer-content">
-            <div class="footer">
-                <div class="footer-txt-1">
-                    Mapa de sitio | Aviso de Privacidad | Contabilidad
-                    Gubernamental | Licitaciones
-                </div>
-                <div class="footer-txt-2">
-                    INSTITUCTO DE INFORMACIÓN ESTADÍSTICA Y GEOGRÁFICA DE JALICO
-                </div>
-                <div class="footer-txt-3">
-                    Calzada de los Pirules 71 Col. Cd. Granja C.P. 45010 Tel.
-                    (33) 37771770
-                </div>
-                <div class="footer-txt-4">Zapopan, Jalisco, México</div>
-                <div class="footer-txt-5">
-                    <img
-                        class="logo-jaliscogob"
-                        src="./assets/images/jaliscogob.svg"
-                        alt=""
-                    />
-                </div>
-            </div>
-        </div> -->
-        <!-- </mat-drawer-container> -->
+        </div>
     </div>
 
     <div class="map">
         <app-map
             [layer_case]="radioButton"
             [dataFilter]="dataFilterDash"
+            [dataFilterMap]="dataFilterDashMap"
             (desde_el_hijo)="getDataMap($event)"
             (desde_el_hijo_map)="getDataMap2($event)"
         >

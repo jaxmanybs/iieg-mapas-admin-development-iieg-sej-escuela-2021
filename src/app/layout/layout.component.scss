@@ -1,28 +1,3 @@
-$color-grisText: #7C878E;
-$color-gris2: #E5E6E8;
-$color-amarillo: #e9bd3f;
-$color-azul: #EFF7FF;
-$color-azul2: #527BFF;
-$color-fondo: #303F51;
-
-$color-violet: #61568D;
-$color-blue: #262840;
-$color-blue-light: #91B0D9;
-$color-background: #E5EBF7;
-$color-orange: #F2AE72;
-$color-rose: #F08077;
-
-// *{
-//     color: whitesmoke;
-// }
-*{
-    background: $color-background;
-  //   font-family: "archia";
-}
-.main-container{
-    background: $color-background;
-    padding: 0;
-    // padding-right: 0;
-    // padding-top: 0;
-    // padding-bottom: 0;
+.main-container {
+    padding: 0 0 0 25px;
 }

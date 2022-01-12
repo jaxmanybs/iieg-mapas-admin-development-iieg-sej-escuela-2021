@@ -80,6 +80,8 @@ export class MapComponent implements OnInit, OnChanges {
     // actualizar capa
 
     @Input() dataFilter: string;
+    @Input() dataFilterMap: string;
+    dataFilterMaps = 'med-sup';
     source;
     params;
 
@@ -95,10 +97,10 @@ export class MapComponent implements OnInit, OnChanges {
     // agregar capa de munnicipios para este producto
     geoserverLayers = [
         'iieg:mpios2012_lgtb',
-        'iieg:med_sup',
-        'iieg:cap_trab',
-        'sej:med_sup',
-        'sej:cap_trab',
+        'iieg:sej_med_sup_api',
+        'iieg:sej_cap_trab_api',
+        // 'sej:med_sup',
+        // 'sej:cap_trab',
     ];
 
     osmLayer: any;
@@ -162,6 +164,8 @@ export class MapComponent implements OnInit, OnChanges {
 
     arrPersonas: Data[];
 
+    link = '';
+
 
 
     constructor(
@@ -173,16 +177,33 @@ export class MapComponent implements OnInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges): void {
 
+        // console.log(changes);
+        // console.log(changes.dataFilter.currentValue);
+
+
+
         console.log('OnChanges--this.dataFilter');
-
         console.log('dashboard ngOnChanges()');
+        this._route.params.forEach(params => {
+            console.log('ngOnInit-params.link', params.link);
 
-        this._requestService.getData$().subscribe(data => {
-            console.log('data');
-            console.log(data);
 
-            this.arrPersonas = data;
+            this.dataFilterMaps = params.link;
+
         });
+
+
+        // this._requestService.getData$().subscribe(data => {
+        //     console.log('data');
+        //     console.log(data);
+
+        //     this.arrPersonas = data;
+        // });
+        console.log('this.dataFilter', this.dataFilter);
+        console.log('this.dataFilterMaps', this.dataFilterMap);
+        console.log('this.link', this.link);
+
+
 
 
 
@@ -192,22 +213,49 @@ export class MapComponent implements OnInit, OnChanges {
             // console.log('if this.firtsChange');
             // console.log(this.firtsChange);
 
-            switch (this.dataFilter) {
+            switch (this.dataFilterMaps) {
                 case 'med-sup':
                     // this.municipios.getSource().updateParams({ STYLES: this.myStyles[1] });
                     // this.medSup.getSource().updateParams({ LAYERS: this.geoserverLayers[1], STYLES: this.myStyles[2] });
-                    this.medSup.getSource().updateParams({ LAYERS: this.geoserverLayers[1] });
+                    this.medSup.getSource().updateParams({ LAYERS: this.geoserverLayers[1], STYLES: this.myStyles[1] });
+                    this.link = 'layer:med_sup;';
+                    console.log('LAYER-SELECTED-med-sup', this.medSup.getSource().getParams());
                     // this.medSup.getSource().updateParams({ LAYERS: this.geoserverLayers[3] });
                     break;
                 case 'cap-trab':
                     // this.municipios.getSource().updateParams({ STYLES: this.myStyles[2] });
                     // this.medSup.getSource().updateParams({ LAYERS: this.geoserverLayers[2], STYLES: this.myStyles[2] });
-                    this.medSup.getSource().updateParams({ LAYERS: this.geoserverLayers[2] });
+                    this.medSup.getSource().updateParams({ LAYERS: this.geoserverLayers[2], STYLES: this.myStyles[2] });
+                    this.link = 'layer:cap_trab;';
+                    console.log('LAYER-SELECTED-cap-trab', this.medSup.getSource().getParams());
+
                     // this.medSup.getSource().updateParams({ LAYERS: this.geoserverLayers[4] });
                     break;
                 default:
                     break;
             }
+
+            const viewparams = this.medSup.getSource().getParams();
+
+
+
+            // console.log(this.dataFilter);
+            // // console.log(this.dataFilterMap);
+
+
+            this.VIEW_PARAMS = this.link + this.dataFilterMap;
+            console.log('this.VIEW_PARAMS', this.VIEW_PARAMS);
+
+            // // console.log('viewparams before filter');
+            console.log(viewparams.VIEWPARAMS);
+
+            viewparams.VIEWPARAMS = this.VIEW_PARAMS;
+
+            // console.log('viewparams after filter');
+            // console.log(viewparams);
+
+
+            this.medSup.getSource().updateParams(viewparams);
 
 
         } else {
@@ -219,20 +267,7 @@ export class MapComponent implements OnInit, OnChanges {
 
 
 
-        // const viewparams = this.capTrab.getSource().getParams();
 
-        // this.VIEW_PARAMS = this.dataFilter;
-
-        // // console.log('viewparams before filter');
-        // // console.log(viewparams);
-
-        // viewparams.VIEWPARAMS = this.VIEW_PARAMS;
-
-        // // console.log('viewparams after filter');
-        // // console.log(viewparams);
-
-
-        // this.capTrab.getSource().updateParams(viewparams);
 
     }
 
@@ -241,10 +276,11 @@ export class MapComponent implements OnInit, OnChanges {
         this.createLayers();
         this.createMap();
 
-        this._route.params.forEach(params => {
-            console.log(params.link);
 
-        });
+        // this._route.params.forEach(params => {
+        //     console.log(params.link);
+
+        // });
         // this._route.params.forEach(params =>{
 
         //     this.layer = this._router.url.split('-')[1];
@@ -491,29 +527,38 @@ export class MapComponent implements OnInit, OnChanges {
         const url1 = this.medSup.getSource().getFeatureInfoUrl(
             evt.coordinate, viewResolution, 'EPSG:3857',
             { 'INFO_FORMAT': 'application/json' });
+        console.log(url1);
+
 
         fetch(url1).then(data => {
             return data.json();
         }).then(json => {
 
-            console.log(json);
+            console.log(json.features);
 
-            //         try {
+            try {
 
-            //             json.features[0].properties['layers'] = this.sinister.getSource().getParams().LAYERS;
-            //             json.features[0].properties['viewparams'] = this.sinister.getSource().getParams().VIEWPARAMS;
+                console.log('LAYERS', this.medSup.getSource().getParams().LAYERS);
+                console.log('VIEWPARAMS', this.medSup.getSource().getParams().VIEWPARAMS);
 
-            //             this._requestService.updateCvegeo(json.features[0].properties.cvegeo);
-            //             this._requestService.updateLayers(json.features[0].properties.layers);
+                // json.features[0].properties['layers'] = this.medSup.getSource().getParams().LAYERS;
+                // json.features[0].properties['viewparams'] = this.medSup.getSource().getParams().VIEWPARAMS;
 
-            //             this.desde_el_hijo.emit(json.features[0].properties);
-            //             this.date_now_covid_service = json.features[0].properties.date_now;
+                // this._requestService.updateCvegeo(json.features[0].properties.cvegeo);
+                // this._requestService.updateLayers(json.features[0].properties.layers);
 
-            //         } catch (error) {
-            //             // console.log(error);
-            //         }
 
-            //         return null;
+                // enviar los datos y los VIEWPARAMS por el this.desde_el_hijo.emit
+                const dataJson = { data: json.features[0].properties, viewparams: this.medSup.getSource().getParams().VIEWPARAMS };
+
+                // this.desde_el_hijo.emit(json.features[0].properties);
+                this.desde_el_hijo.emit(dataJson);
+
+            } catch (error) {
+                console.log(error);
+            }
+
+            // return null;
         });
     }
 

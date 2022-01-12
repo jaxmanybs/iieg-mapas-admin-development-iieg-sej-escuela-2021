@@ -21,7 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSortModule} from '@angular/material/sort';
+import { MatSortModule } from '@angular/material/sort';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDividerModule } from '@angular/material/divider';
@@ -31,8 +31,10 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { RequestService } from '../services/request.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { MatListModule } from '@angular/material/list';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 // services
 import { DateService } from '../services/date.service';
@@ -45,6 +47,7 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/moment';
 import * as moment from 'moment';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { MilesPipe } from '../shared/miles.pipe';
 
 export function momentAdapterFactory() {
     return adapterFactory(moment);
@@ -78,15 +81,17 @@ export function momentAdapterFactory() {
         MatSidenavModule,
         NgxSpinnerModule,
         NgApexchartsModule,
+        MatSnackBarModule,
 
         // Material
         MatBottomSheetModule,
         MatButtonModule,
+        MatTooltipModule,
         MatListModule,
-        FlexLayoutModule.withConfig({addFlexToParent: false}),
+        FlexLayoutModule.withConfig({ addFlexToParent: false }),
         CalendarModule.forRoot({ provide: DateAdapter, useFactory: momentAdapterFactory })
     ],
-    declarations: [DashboardComponent, MapComponent, Chartbar2020Component],
+    declarations: [DashboardComponent, MapComponent, Chartbar2020Component, MilesPipe],
     providers: [{ provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }, DatePipe, RequestService, DateService]
 })
-export class DashboardModule {}
+export class DashboardModule { }

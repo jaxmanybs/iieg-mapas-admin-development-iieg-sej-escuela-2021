@@ -1,10 +1,41 @@
-// ::ng-deep .mat-bottom-sheet-container-large {
-//     min-width: 900px;
-//     max-width: calc(100vw - 256px);
-// }
+// SEJ
+$color-sej-purple: #960048;
+$color-sej-red: #e7004c;
+$color-sej-pink1: #f45197;
+$color-sej-pink2: #fa7598;
+$color-sej-violet1: #9578d3;
+$color-sej-violet2: #c29fd8;
+$color-sej-violet3: #ecd2e1;
+$color-sej-blue1: #004a98;
+$color-sej-blue2: #00a7e1;
+$color-sej-blue3: #6bc4e8;
+$color-sej-green: #3dae2b;
+$color-sej-yellow: #ffc600;
+$color-sej-orange1: #ff6c37;
+$color-sej-orange2: #ff9d6c;
+$color-sej-gray: #7b868c;
+$color-sej-white: white;
 
+mat-form-field {
+    width: 600px;
+    padding: 0 20px;
+}
+p {
+    font-size: 24px;
+    font-weight: bold;
+    padding-left: 30px;
+}
+.filter {
+    padding-left: 20px;
+    .btn_filter {
+        color: $color-sej-white;
+        background-color: $color-sej-gray;
+        // width: 90px;
+        // height: 40px;
+    }
+}
 ::ng-deep .mat-bottom-sheet-container {
-    padding: 20px 0px 200px 16px;
+    padding: 20px 0px 80px 10px;
     // min-width: 100vw;
     box-sizing: border-box;
     display: block;
@@ -13,9 +44,7 @@
     overflow: auto;
 }
 
-
 .num {
     color: green;
     font-size: 40px;
-
 }

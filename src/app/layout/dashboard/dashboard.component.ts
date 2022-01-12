@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { formatDate } from '@angular/common';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
 
-import { Subscription } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
 
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
@@ -30,9 +30,28 @@ import { SpinnerService } from '../services/spinner.service';
 import { CalendarView, DAYS_OF_WEEK, CalendarEvent } from 'angular-calendar';
 import * as moment from 'moment';
 
+interface Filter {
+    value: string;
+    viewValue: string;
+}
+
 interface Worker {
     value: string;
     name: string;
+}
+interface Career {
+    career: string;
+}
+
+interface DataSchool {
+    cveSchool: string;
+    nomSchool: string;
+    programa: string;
+    careers: Career[];
+    address: string;
+    nomTown: string;
+    zipCode: string;
+    phoneNumber: string;
 }
 
 const colors: any = {
@@ -240,7 +259,48 @@ export class DashboardComponent implements OnInit {
 
     @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
 
-    // filtrado
+    layerNow: boolean;
+    // filtro por palabra
+    selectedValue: string;
+    selectedCar: string;
+
+    filters: Filter[] = [
+        { value: 'nomMunicipio', viewValue: 'Nombre Municipio' },
+        { value: 'nomEscuela', viewValue: 'Nombre Escuela' },
+        { value: 'carrera', viewValue: 'Carrera' }
+    ];
+
+    // filtrado med_sup
+    totEscuelasMedSup = 0;
+    totEstudiantesMedSup = 0;
+    totHombresMedSup = 0;
+    totMujeresMedSup = 0;
+
+    // filtrado cap_trab
+    totEscuelasCapTrab = 0;
+    totEstudiantesCapTrab = 0;
+    totHombresCapTrab = 0;
+    totMujeresCapTrab = 0;
+
+    // datos al clic en mapa
+    dataSchools: any;
+    dataSchool1: any;
+    dataSchool2: any;
+    careers: any;
+    hasCarrer = 0;
+    careers1: any;
+    careers2: any;
+    dataSchoolActive = false;
+    dataSchoolActives = false;
+    hombresClickMap1 = 0;
+    mujeresClickMap1 = 0;
+    hombresClickMap2 = 0;
+    mujeresClickMap2 = 0;
+    alumnosTotClickMap1 = 0;
+    alumnosTotClickMap2 = 0;
+
+
+
     listarPaises: any[];
     intersections = 0;
     sinistries = 0;
@@ -260,7 +320,7 @@ export class DashboardComponent implements OnInit {
     minHorary2 = new Date(2017, 7, 31);
     maxHorary2 = new Date(2020, 6, 30);
 
-    formGroup: FormGroup = new FormGroup({
+    formGroupFilter: FormGroup = new FormGroup({
         start_date: new FormControl(''),
         end_date: new FormControl('', Validators.required),
         mun: new FormControl('', Validators.required),
@@ -279,6 +339,7 @@ export class DashboardComponent implements OnInit {
 
     //
     dataFilterDash;
+    dataFilterDashMap;
 
     workers: Worker[] = [
         { value: 'all', name: 'Todos' },
@@ -352,7 +413,6 @@ export class DashboardComponent implements OnInit {
     mensajeVegeta: string;
 
     parametro;
-    layerNow;
 
     dataHombres;
     data1;
@@ -517,8 +577,11 @@ export class DashboardComponent implements OnInit {
             },
         }
     };
-    public doughnutChartLabels: Label[] = ['Media superior', 'Capacitación del trabajo', ];
-    public doughnutChartData: number[] = [4, 2];
+    public doughnutChartLabels: Label[] = ['Media superior', 'Capacitación del trabajo'];
+    public doughnutChartData: number[] = [0, 0];
+    public doughnutChartData2: number[] = [0, 0];
+    public doughnutChartDataClickMap1: number[] = [0, 0];
+    public doughnutChartDataClickMap2: number[] = [0, 0];
     public doughnutChartType: ChartType = 'doughnut';
     public doughnutChartLegend = true;
     public doughnutChartPlugins = [];
@@ -648,7 +711,16 @@ export class DashboardComponent implements OnInit {
     openBottomSheet(): void {
         this.pos = 0;
         this.viewParams = '';
-        // console.log(new Date());
+        console.log('openBottomSheet()');
+        // this._router.events.subscribe((e: any) => {
+
+        //     console.log('e:', e);
+
+
+        //     // if (event instanceof NavigationStart) {
+        //     // }
+
+        // });
 
 
         this._bottomSheet.open(BottonSheetExampleComponent)
@@ -660,21 +732,22 @@ export class DashboardComponent implements OnInit {
 
                 // });
 
-                // console.log(dataFilter);
+                console.log('this._bottomSheet.open.afterDismissed()', dataFilter);
 
-                if (moment.duration(dataFilter.endDate - dataFilter.startDate).asYears() < 3) {
-                    this.minDateSelect = false;
-                }
+
+                // if (moment.duration(dataFilter.endDate - dataFilter.startDate).asYears() < 3) {
+                //     this.minDateSelect = false;
+                // }
 
                 Object.values(dataFilter).forEach(value => {
                     if (value) {
                         switch (Object.getOwnPropertyNames(dataFilter)[this.pos]) {
                             case Object.getOwnPropertyNames(dataFilter)[0]: {
-                                this.viewParams += Object.getOwnPropertyNames(dataFilter)[0] + ':' + formatDate(dataFilter.startDate, 'yyyyMMdd', 'en-US') + ';';
+                                this.viewParams += Object.getOwnPropertyNames(dataFilter)[0] + ':' + value + ';';
                                 break;
                             }
                             case Object.getOwnPropertyNames(dataFilter)[1]: {
-                                this.viewParams += Object.getOwnPropertyNames(dataFilter)[1] + ':' + formatDate(dataFilter.endDate, 'yyyyMMdd', 'en-US') + ';';
+                                this.viewParams += Object.getOwnPropertyNames(dataFilter)[1] + ':' + value + ';';
                                 break;
                             }
                             case Object.getOwnPropertyNames(dataFilter)[2]: {
@@ -686,27 +759,7 @@ export class DashboardComponent implements OnInit {
                                 break;
                             }
                             case Object.getOwnPropertyNames(dataFilter)[4]: {
-                                this.viewParams += Object.getOwnPropertyNames(dataFilter)[4] + ':' + value.toString().substring(0, 6) + ';';
-                                break;
-                            }
-                            case Object.getOwnPropertyNames(dataFilter)[5]: {
-                                this.viewParams += Object.getOwnPropertyNames(dataFilter)[5] + ':' + value + ';';
-                                break;
-                            }
-                            case Object.getOwnPropertyNames(dataFilter)[6]: {
-                                this.viewParams += Object.getOwnPropertyNames(dataFilter)[6] + ':' + value + ';';
-                                break;
-                            }
-                            case Object.getOwnPropertyNames(dataFilter)[7]: {
-                                this.viewParams += Object.getOwnPropertyNames(dataFilter)[7] + ':' + value.toString().substring(0, 6) + ';';
-                                break;
-                            }
-                            case Object.getOwnPropertyNames(dataFilter)[8]: {
-                                this.viewParams += Object.getOwnPropertyNames(dataFilter)[8] + ':' + value + ';';
-                                break;
-                            }
-                            case Object.getOwnPropertyNames(dataFilter)[9]: {
-                                this.viewParams += Object.getOwnPropertyNames(dataFilter)[9] + ':' + value + ';';
+                                this.viewParams += Object.getOwnPropertyNames(dataFilter)[4] + ':' + value + ';';
                                 break;
                             }
                             default: {
@@ -717,25 +770,29 @@ export class DashboardComponent implements OnInit {
                     this.pos++;
                 });
 
-                // console.log('---- this.viewParams');
-                // console.log(this.viewParams);
+                console.log('---- this.viewParams');
+                console.log(this.viewParams);
 
                 // this.vpGenders = 'genders:Mas;';
                 // this.viewParams += this.vpGenders;
 
-                this.getSinisterIntersections(this.viewParams);
-                this.getSinisterSinistries(this.viewParams);
-                this.getSinisterWounds(this.viewParams);
+                this.getMedSup(this.viewParams);
 
-                this.dataFilterDash = this.viewParams;
-                // console.log('result');
-                // console.log(result);
-                // console.log('Bottom sheet has been dismissed.');
-                if (dataFilter.towns) {
-                    this.municipio = dataFilter.towns;
-                } else {
-                    this.municipio = '';
-                }
+
+                // this.getSinisterIntersections(this.viewParams);
+                // this.getSinisterSinistries(this.viewParams);
+                // this.getSinisterWounds(this.viewParams);
+
+                this.dataFilterDashMap = this.viewParams;
+                // this.dataFilterDash = this.viewParams;
+                // // console.log('result');
+                // // console.log(result);
+                // // console.log('Bottom sheet has been dismissed.');
+                // if (dataFilter.towns) {
+                //     this.municipio = dataFilter.towns;
+                // } else {
+                //     this.municipio = '';
+                // }
 
             });
     }
@@ -775,7 +832,8 @@ export class DashboardComponent implements OnInit {
         private _dateService: DateService,
         private miDatePipe: DatePipe,
         private _bottomSheet: MatBottomSheet,
-        private _spinnerService: SpinnerService) {
+        private _spinnerService: SpinnerService,
+        private _snackBar: MatSnackBar) {
 
         this.data = 'sidebar';
         this.formulario = new FormGroup({
@@ -786,17 +844,23 @@ export class DashboardComponent implements OnInit {
             email: new FormControl(),
         });
 
+        this.formGroupFilter = new FormGroup({
+            filter: new FormControl('', Validators.required),
+            filterString: new FormControl('', Validators.required)
+        });
+
+        this._router.navigate(['/med-sup']);
         // this.openBottomSheet();
 
         // saca el total de intersections - cruces
-        this.getSinisterIntersections(this.viewParams);
+        // this.getSinisterIntersections(this.viewParams);
 
         // saca el total de siniestros - sinistries
-        this.getSinisterSinistries(this.viewParams);
+        // this.getSinisterSinistries(this.viewParams);
 
 
         // saca el total de intersections - cruces
-        this.getSinisterWounds(this.viewParams);
+        // this.getSinisterWounds(this.viewParams);
 
 
         // this._dateService.getSinisterWounds(this.viewParams).subscribe(data => {
@@ -843,11 +907,11 @@ export class DashboardComponent implements OnInit {
         //   })
         // }
 
-        this._route.params.forEach(params => {
-            console.log(params.link);
+        // this._route.params.forEach(params => {
+        //     console.log('constructor-params.link', params.link);
 
 
-        });
+        // });
         // this._route.params.forEach(params => {
 
         //     // console.log(this._router.url);
@@ -912,11 +976,15 @@ export class DashboardComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        const viewParams = '';
+        this.getMedSup(viewParams);
 
 
         this._route.params.forEach(params => {
-            console.log(params.link);
-            this.dataFilterDash = params.link;
+            // console.log('ngOnInit-params.link', params.link);
+
+
+            this.dataFilterDashMap = params.link;
             // console.log('this.dataFilterDash', this.dataFilterDash);
 
             // switch (this.dataFilterDash) {
@@ -957,7 +1025,34 @@ export class DashboardComponent implements OnInit {
     }
 
     onSubmit() {
-        this._requestService.setDataService(this.formulario.value);
+
+        if (this.formGroupFilter.invalid) {
+            console.log(false);
+            this._snackBar.open('Los campos no pueden estar vacios', '', {
+                duration: 1500
+            });
+
+            return;
+        }
+
+        console.log(this.formGroupFilter.valid);
+        console.log(this.formGroupFilter.controls.filter.value);
+        console.log(this.formGroupFilter.controls.filterString.value);
+
+        console.log('onSubmit');
+
+        const params = `${this.formGroupFilter.controls.filter.value}:${this.formGroupFilter.controls.filterString.value.toUpperCase()};`;
+
+        console.log(params);
+
+
+        this.getMedSup(params);
+
+        this.dataFilterDashMap = params;
+
+        console.log(this.formGroupFilter.value);
+
+        // this._requestService.setDataService(this.formulario.value);
     }
 
     getResponseQuestions(viewParams) {
@@ -998,32 +1093,78 @@ export class DashboardComponent implements OnInit {
 
     getSinisterWounds(viewParams) {
         this._dateService.getSinisterWounds(viewParams).subscribe(data => {
-            // console.log(data.features[0].properties);
             this.involved = data.features[0].properties.wounds;
             this.fatalities = data.features[0].properties.muertos;
             this.wounds = data.features[0].properties.heridos;
         });
     }
 
-    getSinisterIntersections(viewParams) {
-        this._dateService.getSinisterIntersections(viewParams).subscribe(data => {
-            // console.log(data.features[0].properties.intersections);
-            this.intersections = data.features[0].properties.intersections;
+
+    // trae los datos del dashboard
+    getMedSup(viewParams) {
+
+        this._dateService.getCapTrab(`layer:cap_trab;${viewParams}`).subscribe(data => {
+
+            const { totescuelas,
+                totestudiantes,
+                tothombres,
+                totmujeres } = data.features[0].properties;
+
+
+            if (totescuelas === 0) {
+
+                this.totEscuelasCapTrab = 0;
+                this.totEstudiantesCapTrab = 0;
+                this.totHombresCapTrab = 0;
+                this.totMujeresCapTrab = 0;
+
+                this.doughnutChartData2 = [0, 0];
+            } else {
+                this.totEscuelasCapTrab = totescuelas;
+                this.totEstudiantesCapTrab = totestudiantes;
+                this.totHombresCapTrab = tothombres;
+                this.totMujeresCapTrab = totmujeres;
+
+                this.doughnutChartData2 = [this.totMujeresCapTrab, this.totHombresCapTrab];
+            }
+
+        });
+
+        this._dateService.getMedSup(viewParams).subscribe(data => {
+
+            const { totescuelas,
+                totestudiantes,
+                tothombres,
+                totmujeres } = data.features[0].properties;
+
+
+            if (totescuelas === 0) {
+
+                this.totEscuelasMedSup = 0;
+                this.totEstudiantesMedSup = 0;
+                this.totHombresMedSup = 0;
+                this.totMujeresMedSup = 0;
+
+                this.doughnutChartData = [0, 0];
+            } else {
+
+                this.totEscuelasMedSup = totescuelas;
+                this.totEstudiantesMedSup = totestudiantes;
+                this.totHombresMedSup = tothombres;
+                this.totMujeresMedSup = totmujeres;
+
+                this.doughnutChartData = [this.totMujeresMedSup, this.totHombresMedSup];
+            }
 
 
         });
     }
-    // onSubmit(){
-    //     this.cveSubsector = this.formGroup.value.subsector
-    //     this.empleoyee = this.formGroup.value.workers
-    // this.service.getActivities(this.formGroup.value.subsector, this.formGroup.value.workers).subscribe(data => {
-    //   var listAtivities = []
-    //   data.features.forEach(element => {
-    //     listAtivities.push(element.properties)
-    //   });
-    //   this.externalData = listAtivities
-    // })
-    // }
+    getSinisterIntersections(viewParams) {
+        this._dateService.getSinisterIntersections(viewParams).subscribe(data => {
+            // console.log(data.features[0].properties.intersections);
+            this.intersections = data.features[0].properties.intersections;
+        });
+    }
 
     getAllActives(date_covid, date_covid7, date_covid14, cvegeo) {
 
@@ -1191,155 +1332,60 @@ export class DashboardComponent implements OnInit {
 
     getDataMap(params) {
 
-        this.municipio = params.nombre;
-        this.lineChartData = [
-            { data: [0, 0, 0], label: 'Mujeres' },
-            { data: [0, 0, 0], label: 'Hombres' },
-            { data: [0, 0, 0], label: 'Ne' }
-        ];
+        this.dataSchools = [];
+        this.dataSchool1 = [];
+        this.dataSchool2 = [];
+        this.careers = [];
+        this.careers1 = [];
+        this.careers2 = [];
 
-        let re = /Z/gi;
-        let str = params.date_now;
-        let date_covid = str.replace(re, '');
+        this.dataSchoolActive = true;
+        let cont = 0;
 
-        re = /-/gi;
-        str = date_covid;
-        date_covid = str.replace(re, ', ');
+        this._dateService.getDataSchool(params.data.clave_inmueble, params.viewparams).subscribe((data: any) => {
+            this.dataSchool1.push(data.features[0]);
+            this.dataSchool2.push(data.features[1]);
 
-        const date_now = new Date(date_covid);
-        const date_now7 = new Date(date_covid);
-        const date_now14 = new Date(date_covid);
+            this.doughnutChartDataClickMap1 = [data.features[0].properties.hombres, data.features[0].properties.mujeres];
+            this.hombresClickMap1 = data.features[0].properties.hombres;
+            this.mujeresClickMap1 = data.features[0].properties.mujeres;
+            this.alumnosTotClickMap1 = data.features[0].properties.total;
 
-        date_now7.setDate(date_now.getDate() - 7);
-        date_now14.setDate(date_now.getDate() - 14);
+            this.alumnosTotClickMap2 = 0;
 
-        this.date_covid = formatDate(date_now, 'yyyyMMdd', 'en-US');
-        this.date_covid7 = formatDate(date_now7, 'yyyyMMdd', 'en-US');
-        this.date_covid14 = formatDate(date_now14, 'yyyyMMdd', 'en-US');
+            if (data.features.length === 2) {
+                this.doughnutChartDataClickMap2 = [data.features[1].properties.hombres, data.features[1].properties.mujeres];
+                this.hombresClickMap2 = data.features[1].properties.hombres;
+                this.mujeresClickMap2 = data.features[1].properties.mujeres;
+                this.alumnosTotClickMap2 = data.features[1].properties.total;
+            }
 
-        this.cvegeo = params.cvegeo;
-
-        this._requestService.getActivesMun(params.layers, params.viewparams, this.cvegeo).subscribe(data => {
-            data.features.forEach(feature => {
-                this.dataProperties = feature.properties;
-                this.tot_cases_mun = feature.properties.activos;
-
-                this._requestService.getActives7Mun(params.layers, this.date_covid7, this.cvegeo).subscribe(data => {
-
-                    if (data.numberReturned === 0) {
-                        this.dataProperties7['hombres'] = 0;
-                        this.dataProperties7['mujeres'] = 0;
-                        this.dataProperties7['ne'] = 0;
-
-                        this._requestService.getActives14Mun(params.layers, this.date_covid14, this.cvegeo).subscribe(data => {
-
-                            if (data.numberReturned === 0) {
-                                this.dataProperties14['hombres'] = 0;
-                                this.dataProperties14['mujeres'] = 0;
-                                this.dataProperties14['ne'] = 0;
-
-                                if (params.layers === 'activosnacional') {
-                                    const layer = 'positivosacumxmpionac';
-                                    this._requestService.getAcumMun_7_14(layer, this.date_covid, params.cvegeo).subscribe(data => {
-                                        data.features.forEach(feature => {
-                                            this.dataProperties['acumulados'] = feature.properties.activos;
-                                            this.dataProperties['acumulados_h'] = feature.properties.hombres;
-                                            this.dataProperties['acumulados_m'] = feature.properties.mujeres;
-                                            this.dataProperties['acumulados_ne'] = feature.properties.ne;
-                                            this.tot_cases_mun_acum = feature.properties.activos;
-
-                                            this.doughnutChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
-                                            this.loadCharts(this.dataProperties, this.dataProperties7, this.dataProperties14);
-                                        });
-                                    });
-
-                                } else {
-                                    this.doughnutChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
-                                    this.loadCharts(this.dataProperties, this.dataProperties7, this.dataProperties14);
-                                }
-
-                            } else {
-
-                                data.features.forEach(feature => {
-                                    this.dataProperties14 = feature.properties;
-                                    if (params.layers === 'activosnacional') {
-                                        const layer = 'positivosacumxmpionac';
-                                        this._requestService.getAcumMun_7_14(layer, this.date_covid, params.cvegeo).subscribe(data => {
-                                            data.features.forEach(feature => {
-                                                this.dataProperties['acumulados'] = feature.properties.activos;
-                                                this.dataProperties['acumulados_h'] = feature.properties.hombres;
-                                                this.dataProperties['acumulados_m'] = feature.properties.mujeres;
-                                                this.dataProperties['acumulados_ne'] = feature.properties.ne;
-                                                this.tot_cases_mun_acum = feature.properties.activos;
-
-                                                this.doughnutChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
-                                                this.loadCharts(this.dataProperties, this.dataProperties7, this.dataProperties14);
-                                            });
-                                        });
-
-                                    } else {
-                                        this.doughnutChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
-                                        this.loadCharts(this.dataProperties, this.dataProperties7, this.dataProperties14);
-                                    }
-                                });
-                            }
-
-                        });
-
-                        // this.loadCharts(this.dataProperties, this.dataProperties7, this.dataProperties7);
-
-                    } else {
-
-                        data.features.forEach(feature => {
-                            this.dataProperties7 = feature.properties;
-
-                            this._requestService.getActives14Mun(params.layers, this.date_covid14, this.cvegeo).subscribe(data => {
-
-                                if (data.numberReturned === 0) {
-                                    this.dataProperties14['hombres'] = 0;
-                                    this.dataProperties14['mujeres'] = 0;
-                                    this.dataProperties14['ne'] = 0;
-
-                                    this.doughnutChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
-                                    this.loadCharts(this.dataProperties, this.dataProperties7, this.dataProperties14);
-                                } else {
-
-                                    data.features.forEach(feature => {
-                                        this.dataProperties14 = feature.properties;
-                                        if (params.layers === 'activosnacional') {
-                                            const layer = 'positivosacumxmpionac';
-                                            this._requestService.getAcumMun_7_14(layer, this.date_covid, params.cvegeo).subscribe(data => {
-                                                data.features.forEach(feature => {
-                                                    this.dataProperties['acumulados'] = feature.properties.activos;
-                                                    this.dataProperties['acumulados_h'] = feature.properties.hombres;
-                                                    this.dataProperties['acumulados_m'] = feature.properties.mujeres;
-                                                    this.dataProperties['acumulados_ne'] = feature.properties.ne;
-                                                    this.tot_cases_mun_acum = feature.properties.activos;
-
-                                                    this.doughnutChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
-                                                    this.loadCharts(this.dataProperties, this.dataProperties7, this.dataProperties14);
-                                                });
-                                            });
-
-                                        } else {
-                                            this.doughnutChartData = [feature.properties.mujeres, feature.properties.hombres, feature.properties.ne];
-                                            this.loadCharts(this.dataProperties, this.dataProperties7, this.dataProperties14);
-                                        }
-                                    });
-                                }
-                            });
-                        });
-                    }
+            data.features.map((data: any) => {
+                this._dateService.getCareers(data.properties.clave_escuela).subscribe((data: any) => {
+                    data.features.map((data: any) => {
+                        if (cont === 0) {
+                            this.careers1.push(data.properties.carreras);
+                        }
+                        if (cont === 1) {
+                            this.careers2.push(data.properties.carreras);
+                        }
+                    });
+                    cont++;
                 });
             });
         });
     }
 
-    getDataMap2(layer) {
-        // console.log('getDataMap2(layer)');
-        this.layerNow = layer;
-        // console.log(this.layer);
+    hasCarrers() {
+        this.hasCarrer = 1;
+    }
 
+    closeData() {
+        this.dataSchoolActive = false;
+    }
+
+    getDataMap2(layer) {
+        this.layerNow = layer;
     }
 
     enviarMensaje(mensajeGoku) {
@@ -1352,7 +1398,6 @@ export class DashboardComponent implements OnInit {
     }
 
     loadPieChart(dataProperties) {
-        // this.lineChartLabels = [date_covid_graf14, date_covid_graf7, date_covid_graf];
         this.doughnutChartData = [this.dataProperties.mujeres, dataProperties.hombres];
     }
     loadCharts(dataProperties, dataProperties7, dataProperties14) {
@@ -1390,18 +1435,6 @@ export class DashboardComponent implements OnInit {
             { data: [dataProperties14.ne, dataProperties7.ne, dataProperties.ne], label: 'Ne' }
         ];
     }
-
-    // ng2 chartjs
-    // events
-    // public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {
-    //     console.log(event, active);
-    // }
-
-    // public chartHovered({ event, active }: { event: MouseEvent, active: {}[] }): void {
-    //     console.log(event, active);
-    // }
-    // ng2 chartjs
-
 }
 
 
